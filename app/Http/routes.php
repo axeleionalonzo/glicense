@@ -11,39 +11,49 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+/*
+|
+| Static Page routing
+|
+*/
+Route::get('/', 'WelcomeController@index'); // Landing page for GUEST users
+Route::get('license', 'LicenseController@index'); // Landing page for REGISTERED users
+Route::get('home', 'LicenseController@index');
 
+
+/*
+|
+| Authentication
+|
+*/
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('license', 'LicenseController@index');
 
 /*
-|--------------------------------------------------------------------------
-| FROM THE TUTORIAL STUFF
-|--------------------------------------------------------------------------
+|
+| API calls for Angular updates
+|
 */
+Route::group(array('prefix' => 'api'), function() {
 
-// create an item
-Route::post('test', function() {
-	echo 'post'; 
+    // since we will be using this just for CRUD, we won't need create and edit
+    // Angular will handle both of those forms
+    // this ensures that a user can't access api/create or api/edit when there's nothing there
+    Route::resource('license', 'LicenseController', 
+        array('only' => array('index', 'store', 'destroy')));
+  
 });
 
-// read an item
-Route::get('test', function() {
-	echo 'get'; 
-});
+// Catch for invalid routes
+// Redirects to the welcome page
+// Route::any('{catchall}', 'WelcomeController@index')->where('catchall', '(.*)');
 
-// update an item
-Route::put('test', function() {
-	echo 'put'; 
-});
-
-// delete an item
-Route::delete('test', function() {
-	echo 'delete'; 
-});
+/*
+|
+| Route everything else to the Angular page - angular will handle the routing
+| App::missing no longer supported - how best to trap this routing and render the 'ng' view/page
+*/
