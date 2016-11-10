@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class LicenseController extends Controller {
 
 	/**
-	 * Checks if the user is logged in
+	 * Create a new controller instance.
 	 * 
 	 * @return void
 	 */
@@ -25,11 +25,8 @@ class LicenseController extends Controller {
 	 */
 	public function index()
 	{
-		//
 		$licenses = ActCode::all();
-		foreach ($licenses as $license) {
-			echo "<br />" . $license->act_code;
-		}
+		return view('home', array('licenses' => $licenses));
 	}
 
 	/**
