@@ -32,8 +32,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$licenses = ActCode::all();
-		return view('home', array('licenses' => $licenses));
+		return view('home');
 	}
 
 }

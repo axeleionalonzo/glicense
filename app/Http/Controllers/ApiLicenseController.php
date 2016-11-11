@@ -6,18 +6,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class LicenseController extends Controller {
+class ApiLicenseController extends Controller {
 
-	/**
-	 * Create a new controller instance.
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
-	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -25,7 +15,8 @@ class LicenseController extends Controller {
 	 */
 	public function index()
 	{
-		return view('license/index');
+		$licenses = ActCode::all();
+		return response()->json($licenses);
 	}
 
 	/**
@@ -45,7 +36,8 @@ class LicenseController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$license = ActCode::create(Request::all());
+		return response()->json($licenses);
 	}
 
 	/**
@@ -78,7 +70,11 @@ class LicenseController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$license = ActCode::find($id);
+		$license->done = Request::input('done');
+		$license->save();
+ 
+		return response()->json($licenses);
 	}
 
 	/**
@@ -89,7 +85,8 @@ class LicenseController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		ActCode::destroy($id);
+		return response()->json(array('success' => true));
 	}
 
 }
