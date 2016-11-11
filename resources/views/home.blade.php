@@ -32,20 +32,16 @@
 						@else
 							<tr>
 						@endif
-								<td class="active">{{ $license->act_id }}</td>
-								<td class="">{{ $license->act_code }}</td>
-								<td class="">{{ $license->organization }}</td>
-								<td class="">{{ $license->status }}</td>
-								<td class="">{{ $license->device_code }}</td>
-								<td class="">{{ $license->project }}</td>
-								<td class="">{{ $license->act_date }}</td>
+							<td class="active">{{ $license->act_id }}</td>
+							<td class="">{{ $license->act_code }}</td>
+							<td class="">{{ $license->organization }}</td>
+							<td class="">{{ $license->status }}</td>
+							<td class="">{{ $license->device_code }}</td>
+							<td class="">{{ $license->project }}</td>
+							<td class="">{{ $license->act_date }}</td>
 						</tr>
 					@endforeach
 				</table>
-				<script type="text/javascript">
-				$(document).ready(function(){
-					alert('asd');
-				});</script>
 			</div>
 		</div>
 	</div>

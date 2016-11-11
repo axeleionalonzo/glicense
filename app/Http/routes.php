@@ -17,8 +17,10 @@
 | Static Page routing
 |
 */
-Route::get('/', 'WelcomeController@index'); // Landing page for GUEST users
-Route::get('license', 'LicenseController@index'); // Landing page for REGISTERED users
+// Landing page for GUEST users
+Route::get('/', 'WelcomeController@index');
+// Landing page for REGISTERED users
+Route::get('license', 'LicenseController@index');
 Route::get('home', 'LicenseController@index');
 
 
@@ -38,13 +40,13 @@ Route::controllers([
 | API calls for Angular updates
 |
 */
+// Route::resource('api/license','ApiLicenseController');
 Route::group(array('prefix' => 'api'), function() {
 
     // since we will be using this just for CRUD, we won't need create and edit
     // Angular will handle both of those forms
     // this ensures that a user can't access api/create or api/edit when there's nothing there
-    Route::resource('license', 'LicenseController', 
-        array('only' => array('index', 'store', 'destroy')));
+    Route::resource('license', 'ApiLicenseController');
   
 });
 
