@@ -70,7 +70,7 @@ class ApiLicenseController extends Controller {
 	 */
 	public function update($id)
 	{
-		$license = ActCode::find($id);
+		$license = ActCode::findOrFail($id);
 		$license->done = Request::input('done');
 		$license->save();
  
