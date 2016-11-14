@@ -20,17 +20,16 @@ app.controller('licenseController', function($scope, $http) {
 
 	$scope.addLicense = function() {
 		$scope.loading = true;
-
 		$http.post('/api/license', {
-			act_code:	$scope.license.act_code,
-			act_code:	$scope.license.organization,
-			act_code:	$scope.license.status,
-			act_code:	$scope.license.device_code,
-			act_code:	$scope.license.project,
-			act_code:	$scope.license.act_date
+			act_code:		$scope.license.act_code,
+			organization:	$scope.license.organization,
+			status:			$scope.license.status,
+			device_code:	$scope.license.device_code,
+			project:		$scope.license.project,
+			act_date:		$scope.license.act_date
 		}).success(function(data, status, headers, config) {
-			$scope.license.push(data);
-			$scope.license = '';
+			$scope.licenses.push(data); // adds the new license to the view
+			$scope.license = ""; // clears the input fields
 			$scope.loading = false;
 		});
 	};

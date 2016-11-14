@@ -4,7 +4,7 @@ use App\License as ActCode;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 
 class ApiLicenseController extends Controller {
 
@@ -34,10 +34,10 @@ class ApiLicenseController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
-		$license = ActCode::create(Request::all());
-		return response()->json($licenses);
+	public function store(Request $request)
+	{	
+		$license = ActCode::create($request::all());
+		return response()->json($license);
 	}
 
 	/**
