@@ -22,7 +22,12 @@ app.controller('licenseController', function($scope, $http) {
 		$scope.loading = true;
 
 		$http.post('/api/license', {
-			act_code:	$scope.license.act_code
+			act_code:	$scope.license.act_code,
+			act_code:	$scope.license.organization,
+			act_code:	$scope.license.status,
+			act_code:	$scope.license.device_code,
+			act_code:	$scope.license.project,
+			act_code:	$scope.license.act_date
 		}).success(function(data, status, headers, config) {
 			$scope.license.push(data);
 			$scope.license = '';
@@ -43,36 +48,37 @@ app.controller('licenseController', function($scope, $http) {
 	};
 
 	$scope.deleteLicense = function(index) {
-		$scope.loading = true;
+		if (confirm("sure to delete")) {
+			$scope.loading = true;
 
-		var license = $scope.licenses[index];
+			var license = $scope.licenses[index];
 
-		$http({
-			method: 'DELETE',
-			url: '/api/license/' + license.act_id
-		}).then(function successCallback(response) {
-			// this callback will be called asynchronously
-			// when the response is available
-			$scope.licenses.splice(index, 1);
-			$scope.loading = false;
-		}, function errorCallback(response) {
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
-			console.log(response);
-		});
+			$http({
+				method: 'DELETE',
+				url: '/api/license/' + license.act_id
+			}).then(function successCallback(response) {
+				// this callback will be called asynchronously
+				// when the response is available
+				$scope.licenses.splice(index, 1);
+				$scope.loading = false;
+			}, function errorCallback(response) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+				console.log(response);
+			});
 
+			// $http.delete('/api/license/' + license.act_id)
+			// 	.success(function(data, status, headers)  {
+			// 		$scope.license.splice(index, 1);
+			// 		$scope.loading = false;
+			// 	}).error(function(data, status, header, config) {
+			//         $scope.ServerResponse = console.log("Data: " + data +
+			//             "\n\n\n\nstatus: " + status +
+			//             "\n\n\n\nheaders: " + header +
+			//             "\n\n\n\nconfig: " + config);
+			//     });
+		}
 
-
-		// $http.delete('/api/license/' + license.act_id)
-		// 	.success(function(data, status, headers)  {
-		// 		$scope.license.splice(index, 1);
-		// 		$scope.loading = false;
-		// 	}).error(function(data, status, header, config) {
-		//         $scope.ServerResponse = console.log("Data: " + data +
-		//             "\n\n\n\nstatus: " + status +
-		//             "\n\n\n\nheaders: " + header +
-		//             "\n\n\n\nconfig: " + config);
-		//     });
 	};
 
 	$scope.init();
