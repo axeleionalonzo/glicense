@@ -1,4 +1,4 @@
-var app = angular.module('licenseApp', [], function($interpolateProvider) {
+var app = angular.module('licenseApp', ['clickOut'], function($interpolateProvider) {
 	$interpolateProvider.startSymbol('<%');
 	$interpolateProvider.endSymbol('%>');
 });
@@ -8,6 +8,7 @@ app.controller('licenseController', function($scope, $http) {
 	$scope.licenses = [];
 	$scope.loading = false;
 
+	// loads the licenses
 	$scope.init = function() {
 		$scope.loading = true;
 
@@ -28,21 +29,53 @@ app.controller('licenseController', function($scope, $http) {
 			project:		$scope.license.project,
 			act_date:		$scope.license.act_date
 		}).success(function(data, status, headers, config) {
-			$scope.licenses.push(data); // adds the new license to the view
-			$scope.license = ""; // clears the input fields
-			$scope.loading = false;
+			if (data.success) {
+				$scope.licenses.push(data.license); // adds the new license to the view
+				$scope.license = ""; // clears the input fields
+				$scope.loading = false;
+			} else {
+				$.each(data.status, function(field, message ) {
+					console.debug(field + ": " + message );
+				});
+			}
 		});
 	};
 
-	$scope.updateLicense = function(license) {
+	$scope.hide = function() {
+		alert("asd");
+	};
+
+	$scope.getLicense = function(index) {
 		$scope.loading = true;
+		$scope.licenses[index].editing = true;
+		
+		var license = $scope.licenses[index];
 
-		$http.put('/api/license/' + license.act_id, {
-			act_code: 	license.act_code
+		var makeEdits = $('tr#'+ license.id);
+		makeEdits.find('input').removeAttr('readonly');
+		// console.log(makeEdits);
+	};
+
+	$scope.updateLicense = function(index) {
+		$scope.loading = true;
+		var license = $scope.licenses[index];
+
+		$http.put('/api/license/' + license.id, {
+			act_code:		license.act_code,
+			organization:	license.organization,
+			status:			license.status,
+			device_code:	license.device_code,
+			project:		license.project,
+			act_date:		license.act_date
 		}).success(function(data, status, headers, config) {
-			license = data;
-			$scope.loading = false;
-
+			if (data.success) {
+				$scope.licenses[index] = data.license;
+				$scope.loading = false;
+			} else {
+				$.each(data.status, function(field, message ) {
+					console.debug(field + ": " + message );
+				});
+			}
 		});;
 	};
 
@@ -54,7 +87,7 @@ app.controller('licenseController', function($scope, $http) {
 
 			$http({
 				method: 'DELETE',
-				url: '/api/license/' + license.act_id
+				url: '/api/license/' + license.id
 			}).then(function successCallback(response) {
 				// this callback will be called asynchronously
 				// when the response is available
@@ -66,7 +99,7 @@ app.controller('licenseController', function($scope, $http) {
 				console.log(response);
 			});
 
-			// $http.delete('/api/license/' + license.act_id)
+			// $http.delete('/api/license/' + license.id)
 			// 	.success(function(data, status, headers)  {
 			// 		$scope.license.splice(index, 1);
 			// 		$scope.loading = false;

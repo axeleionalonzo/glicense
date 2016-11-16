@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class License extends Model {
 
 	protected $table = 'tsqgeointel_activation';
-	protected $primaryKey = 'act_id';
+	protected $primaryKey = 'id';
 
 	protected $fillable = [
 		'act_code',

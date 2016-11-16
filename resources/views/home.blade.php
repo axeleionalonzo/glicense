@@ -32,7 +32,7 @@
 						@else
 							<tr>
 						@endif
-							<td class="active">{{ $license->act_id }}</td>
+							<td class="active">{{ $license->id }}</td>
 							<td class="">{{ $license->act_code }}</td>
 							<td class="">{{ $license->organization }}</td>
 							<td class="">{{ $license->status }}</td>
