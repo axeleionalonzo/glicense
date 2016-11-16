@@ -14,7 +14,7 @@ class TsqgeointelActivation extends Migration {
 	{
 		Schema::create('tsqgeointel_activation', function(Blueprint $table)
 		{
-			$table->increments('act_id');
+			$table->increments('id');
 			$table->string('act_code', 15);
 			$table->string('organization', 50);
 			$table->tinyInteger('status');

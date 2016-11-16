@@ -5,6 +5,7 @@ td > input[type='text']
     border: 0;
     padding: 9px;
     margin: 0;
+    background-color: transparent;
 }
 td.editable
 {
