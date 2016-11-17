@@ -12,3 +12,7 @@ td.editable
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.addMarginBottom {
+	margin-bottom: 75px;
+}

@@ -7,6 +7,7 @@ app.controller('licenseController', function($scope, $http) {
 
 	$scope.licenses = [];
 	$scope.loading = false;
+	$scope.act_date = "...";
 
 	// loads the licenses
 	$scope.init = function() {
@@ -41,8 +42,8 @@ app.controller('licenseController', function($scope, $http) {
 		});
 	};
 
-	$scope.hide = function() {
-		alert("asd");
+	$scope.getDate = function() {
+		$scope.act_date = new Date();
 	};
 
 	$scope.getLicense = function(index) {
@@ -50,9 +51,9 @@ app.controller('licenseController', function($scope, $http) {
 		$scope.licenses[index].editing = 1;
 
 		var license = $scope.licenses[index];
+		var el = $('tr#'+ license.id);
 
-		var makeEdits = $('tr#'+ license.id);
-		makeEdits.find('input').removeAttr('readonly');
+		el.find('input[data="canEdit"]').removeAttr('readonly');
 	};
 
 	$scope.updateLicense = function(index) {
@@ -63,7 +64,7 @@ app.controller('licenseController', function($scope, $http) {
 			console.debug("status: Must be a boolean value (0,1)");
 			license.status = 0;
 		}
-		
+
 		$http.put('/api/license/' + license.id, {
 			act_code:		license.act_code,
 			organization:	license.organization,
@@ -114,7 +115,6 @@ app.controller('licenseController', function($scope, $http) {
 			//             "\n\n\n\nconfig: " + config);
 			//     });
 		}
-
 	};
 
 	$scope.init();
