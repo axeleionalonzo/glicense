@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive addMarginBottom">
 	<table class="table table-bordered">
 		<!-- On rows -->
 		<th class=""></th>
@@ -10,15 +10,15 @@
 		<th class="">project</th>
 		<th class="">date</th>
 		<th class=""></th>
-		<!-- On cells (`td` or `th`) -->
+		<!-- iterates the licenses -->
 		<tr id="<% license.id %>" ng-repeat='license in licenses' ng-class="license.status==1 ? 'info' : ''" ng-dblclick="getLicense($index)" >
 			<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td>
 			<td class="active"><% license.id %></td>
-			<td class="editable"><input type="text" ng-model="license.act_code" readonly></td>
-			<td class="editable"><input type="text" ng-model="license.organization" readonly></td>
-			<td class="editable"><input type="number" step="1" min="0" max="1" ng-model="license.status" readonly></td>
-			<td class="editable"><input type="text" ng-model="license.device_code" readonly></td>
-			<td class="editable"><input type="text" ng-model="license.project" readonly></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" readonly></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" readonly></td>
+			<td class="editable"><input data="canEdit" type="number" step="1" min="0" max="1" ng-model="license.status" readonly></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.device_code" readonly></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.project" readonly></td>
 			<td class="editable"><input type="text" ng-model="license.act_date" readonly></td>
 			<td>
 				<!-- delete button -->
@@ -34,10 +34,10 @@
 			<td class="active">...</td>
 			<td class="editable"><input type="text" ng-model="license.act_code"></td>
 			<td class="editable"><input type="text" ng-model="license.organization"></td>
-			<td class="editable"><input type="text" ng-model="license.status"></td>
+			<td class="editable"><input type="number" step="1" min="0" max="1" ng-model="license.status"></td>
 			<td class="editable"><input type="text" ng-model="license.device_code"></td>
 			<td class="editable"><input type="text" ng-model="license.project"></td>
-			<td class="editable"><input type="text" ng-model="license.act_date"></td>
+			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss' " ng-focus="getDate()"></td>
 			<td><button class="btn btn-success btn-xs" ng-click="addLicense()"><span class="glyphicon glyphicon-ok" ></span></button></td>
 		</tr>
 	</table>
