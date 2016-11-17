@@ -1,4 +1,4 @@
-var app = angular.module('licenseApp', ['clickOut'], function($interpolateProvider) {
+var app = angular.module('licenseApp', [], function($interpolateProvider) {
 	$interpolateProvider.startSymbol('<%');
 	$interpolateProvider.endSymbol('%>');
 });
@@ -47,19 +47,23 @@ app.controller('licenseController', function($scope, $http) {
 
 	$scope.getLicense = function(index) {
 		$scope.loading = true;
-		$scope.licenses[index].editing = true;
-		
+		$scope.licenses[index].editing = 1;
+
 		var license = $scope.licenses[index];
 
 		var makeEdits = $('tr#'+ license.id);
 		makeEdits.find('input').removeAttr('readonly');
-		// console.log(makeEdits);
 	};
 
 	$scope.updateLicense = function(index) {
 		$scope.loading = true;
 		var license = $scope.licenses[index];
 
+		if (license.status == undefined) {
+			console.debug("status: Must be a boolean value (0,1)");
+			license.status = 0;
+		}
+		
 		$http.put('/api/license/' + license.id, {
 			act_code:		license.act_code,
 			organization:	license.organization,
@@ -76,7 +80,7 @@ app.controller('licenseController', function($scope, $http) {
 					console.debug(field + ": " + message );
 				});
 			}
-		});;
+		});
 	};
 
 	$scope.deleteLicense = function(index) {
@@ -117,3 +121,9 @@ app.controller('licenseController', function($scope, $http) {
 
 });
 
+app.directive('licenses', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/licenses.html'
+  };
+});
