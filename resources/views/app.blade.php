@@ -18,7 +18,7 @@
 
 	<!--AngularJS-->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script> <!-- load angular -->
-	<script src="{{ asset('/js/services/angular-clickout.min.js') }}"></script>
+	<script src="{{ asset('/js/services/jquery.floatThead.min.js') }}"></script>
 	<script src="{{ asset('/js/app.js') }}"></script>
 </head>
 <body>
