@@ -37,7 +37,7 @@
 			<td class="editable"><input type="number" step="1" min="0" max="1" ng-model="license.status"></td>
 			<td class="editable"><input type="text" ng-model="license.device_code"></td>
 			<td class="editable"><input type="text" ng-model="license.project"></td>
-			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss' " ng-focus="getDate()"></td>
+			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " ng-focus="getDate()" readonly></td>
 			<td><button class="btn btn-success btn-xs" ng-click="addLicense()"><span class="glyphicon glyphicon-ok" ></span></button></td>
 		</tr>
 	</table>

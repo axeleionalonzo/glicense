@@ -3,11 +3,18 @@ var app = angular.module('licenseApp', [], function($interpolateProvider) {
 	$interpolateProvider.endSymbol('%>');
 });
 
-app.controller('licenseController', function($scope, $http) {
+app.controller('licenseController', function($scope, $interval, $http) {
 
 	$scope.licenses = [];
 	$scope.loading = false;
 	$scope.act_date = "...";
+
+	// controls the ticking time on adding a license
+	var tick = function() {
+		$scope.act_date = new Date();
+	}
+	tick();
+	$interval(tick, 1000);
 
 	// loads the licenses
 	$scope.init = function() {
@@ -20,15 +27,20 @@ app.controller('licenseController', function($scope, $http) {
 		});
 	}
 
+	// adds license
 	$scope.addLicense = function() {
 		$scope.loading = true;
+
+		// gets js datetime ready for mysql datetime
+		var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
+
 		$http.post('/api/license', {
 			act_code:		$scope.license.act_code,
 			organization:	$scope.license.organization,
 			status:			$scope.license.status,
 			device_code:	$scope.license.device_code,
 			project:		$scope.license.project,
-			act_date:		$scope.license.act_date
+			act_date:		act_date
 		}).success(function(data, status, headers, config) {
 			if (data.success) {
 				$scope.licenses.push(data.license); // adds the new license to the view
@@ -42,10 +54,8 @@ app.controller('licenseController', function($scope, $http) {
 		});
 	};
 
-	$scope.getDate = function() {
-		$scope.act_date = new Date();
-	};
-
+	// gets the license details ready for edit
+	// makes the table row editabel
 	$scope.getLicense = function(index) {
 		$scope.loading = true;
 		$scope.licenses[index].editing = 1;
@@ -56,6 +66,7 @@ app.controller('licenseController', function($scope, $http) {
 		el.find('input[data="canEdit"]').removeAttr('readonly');
 	};
 
+	// updates the editable license
 	$scope.updateLicense = function(index) {
 		$scope.loading = true;
 		var license = $scope.licenses[index];
@@ -84,6 +95,7 @@ app.controller('licenseController', function($scope, $http) {
 		});
 	};
 
+	// deletes the motha fucka license :D
 	$scope.deleteLicense = function(index) {
 		if (confirm("sure to delete")) {
 			$scope.loading = true;
@@ -103,17 +115,6 @@ app.controller('licenseController', function($scope, $http) {
 				// or server returns response with an error status.
 				console.log(response);
 			});
-
-			// $http.delete('/api/license/' + license.id)
-			// 	.success(function(data, status, headers)  {
-			// 		$scope.license.splice(index, 1);
-			// 		$scope.loading = false;
-			// 	}).error(function(data, status, header, config) {
-			//         $scope.ServerResponse = console.log("Data: " + data +
-			//             "\n\n\n\nstatus: " + status +
-			//             "\n\n\n\nheaders: " + header +
-			//             "\n\n\n\nconfig: " + config);
-			//     });
 		}
 	};
 
@@ -121,6 +122,8 @@ app.controller('licenseController', function($scope, $http) {
 
 });
 
+// nothing fancy custom directives
+// retrieves the licenses view from licenses.html
 app.directive('licenses', function() {
   return {
     restrict: 'E',
