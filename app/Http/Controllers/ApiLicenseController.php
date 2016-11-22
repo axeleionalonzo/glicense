@@ -32,7 +32,7 @@ class ApiLicenseController extends Controller {
             'act_code'			=> 'required|unique:tsqgeointel_activation,act_code' . ($id ? ",$id" : ''),
             'organization'		=> 'required',
             'status'			=> 'required|boolean',
-            'device_code'		=> 'required|unique:tsqgeointel_activation,device_code' . ($id ? ",$id" : ''),
+            // 'device_code'		=> 'required|unique:tsqgeointel_activation,device_code' . ($id ? ",$id" : ''),
             'project'			=> 'required',
             'act_date'			=> 'required'
         ], 
