@@ -3,7 +3,7 @@ td > input[type='text'], td > input[type='number'], td select
     display:block; /*this will make the text box fill the horizontal space of the its container td*/
     width: 100%; /*this will set the width of the textbox equal to its container td*/
     border: 0;
-    padding: 9px;
+    padding: 12px;
     margin: 0;
     background-color: transparent;
 }
@@ -12,7 +12,57 @@ td.editable
     padding: 0 !important;
     margin: 0 !important;
 }
+td.buttons, th.buttons {
+	border: 0 !important;
+	background-color: #fff !important;
+}
+table, div.table-responsive {
+	border: 0 !important;
+}
+
+.inLineTable {
+	/*padding-left: 30px;*/
+	padding-right: 50px;
+}
 
 .addMarginBottom {
 	margin-bottom: 75px;
+}
+
+.menu {
+	margin-bottom: 10px;
+}
+
+.material-icons {
+	cursor: pointer;
+}
+
+.flatBtn-danger {
+	color: #F44336;
+}
+
+.flatBtn-info {
+	color: #2196F3;
+}
+
+.flatBtn-success {
+	color: #4CAF50;
+}
+
+.flatBtn-warning {
+	color: #FFEB3B;
+}
+
+.flatBtn-default {
+	color: #9E9E9E;
+}
+
+.flatBtn-primary {
+	color: #212121;
+}
+
+.buttons i.material-icons {
+	font-size: 26px;
+	vertical-align: middle !important;
+	text-align: center;
 }

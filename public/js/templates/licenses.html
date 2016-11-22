@@ -1,44 +1,42 @@
 <div class="table-responsive addMarginBottom">
 	<table class="table table-bordered">
 		<!-- On rows -->
-		<th class=""></th>
-		<th class="active">id</th>
-		<th class="">activation code</th>
-		<th class="">organization</th>
-		<th class="">status</th>
-		<th class="">device code</th>
-		<th class="">project</th>
-		<th class="">date</th>
-		<th class=""></th>
+		<!-- <th class="buttons"></th> -->
+		<th class="active">#</th>
+		<th class="">Activation code</th>
+		<th class="">Organization</th>
+		<th class="">Status</th>
+		<th class="">Device code</th>
+		<th class="">Project</th>
+		<th class="">Date</th>
+		<th class="buttons"></th>
 		<!-- iterates the licenses -->
 		<tr id="<% license.id %>" ng-repeat='license in licenses' ng-class="license.status==1 ? 'info' : ''" ng-dblclick="getLicense($index)" >
-			<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td>
+			<!-- <td class="buttons"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td> -->
 			<td class="active"><% license.id %></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" readonly></td>
 			<td class="editable"><input data="canEdit" type="number" step="1" min="0" max="1" ng-model="license.status" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.device_code" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.project" readonly></td>
-			<td class="editable"><input type="text" ng-model="license.act_date" readonly></td>
-			<td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_date" readonly></td>
+			<td class="buttons">
 				<!-- delete button -->
-				<button class="btn btn-danger btn-xs" ng-click="deleteLicense($index)" ng-show="!license.editing && !license.status">
-					<span class="glyphicon glyphicon-trash" ></span></button>
+				<i class="material-icons flatBtn-danger" ng-click="deleteLicense($index)" ng-show="!license.editing && !license.status">delete</i>
 				<!-- update button -->
-				<button class="btn btn-success btn-xs" ng-click="updateLicense($index)" ng-show="license.editing">
-					<span class="glyphicon glyphicon-ok" ></span></button>
+				<i class="material-icons flatBtn-success" ng-click="updateLicense($index)" ng-show="license.editing">done</i>
 			</td>
 		</tr>
 		<tr>
-			<td>...</td>
+			<!-- <td class="buttons"></td> -->
 			<td class="active">...</td>
 			<td class="editable"><input type="text" ng-model="license.act_code"></td>
 			<td class="editable"><input type="text" ng-model="license.organization"></td>
 			<td class="editable"><input type="number" step="1" min="0" max="1" ng-model="license.status"></td>
 			<td class="editable"><input type="text" ng-model="license.device_code"></td>
 			<td class="editable"><input type="text" ng-model="license.project"></td>
-			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " ng-focus="getDate()" readonly></td>
-			<td><button class="btn btn-success btn-xs" ng-click="addLicense()"><span class="glyphicon glyphicon-ok" ></span></button></td>
+			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
+			<td class="buttons"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
 		</tr>
 	</table>
 </div>

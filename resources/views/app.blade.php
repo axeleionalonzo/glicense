@@ -3,21 +3,25 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
 	<title>License</title>
 
+	<!-- Styles -->
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
 	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link href="//fonts.googleapis.com/css?family=Roboto:700,400,300" rel="stylesheet" type="text/css">
+	<link href="{{ asset('/css/material-icon.css') }}" rel="stylesheet">
 
 	<!-- Scripts -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/js/services/jquery.min.js') }}"></script>
+	<script src="{{ asset('/js/services/bootstrap.min.js') }}"></script>
 
 	<!--AngularJS-->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script> <!-- load angular -->
+	<script src="{{ asset('/js/services/angular.min.js') }}"></script> <!-- load angular -->
 	<script src="{{ asset('/js/services/jquery.floatThead.min.js') }}"></script>
 	<script src="{{ asset('/js/app.js') }}"></script>
 </head>
@@ -55,7 +59,7 @@
 			</div>
 		</div>
 	</nav>
-
+	
 	@yield('content')
 
 </body>

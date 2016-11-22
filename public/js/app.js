@@ -20,7 +20,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 	$scope.init = function() {
 		$scope.loading = true;
 
-		$http.get('/api/license').
+		$http.get('./api/license').
 		success(function(data, status, headers, config) {
 			$scope.licenses = data;
 			$scope.loading = false;
@@ -34,7 +34,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 		// gets js datetime ready for mysql datetime
 		var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
 
-		$http.post('/api/license', {
+		$http.post('./api/license', {
 			act_code:		$scope.license.act_code,
 			organization:	$scope.license.organization,
 			status:			$scope.license.status,
@@ -76,7 +76,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 			license.status = 0;
 		}
 
-		$http.put('/api/license/' + license.id, {
+		$http.put('./api/license/' + license.id, {
 			act_code:		license.act_code,
 			organization:	license.organization,
 			status:			license.status,
@@ -104,7 +104,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 
 			$http({
 				method: 'DELETE',
-				url: '/api/license/' + license.id
+				url: './api/license/' + license.id
 			}).then(function successCallback(response) {
 				// this callback will be called asynchronously
 				// when the response is available
@@ -122,7 +122,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 
 });
 
-// nothing fancy custom directives
+// nothing fancy custom directives // =====================================================/
 // retrieves the licenses view from licenses.html
 app.directive('licenses', function() {
   return {
