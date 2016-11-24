@@ -19,6 +19,7 @@
 	<!-- Scripts -->
 	<script src="{{ asset('/js/services/jquery.min.js') }}"></script>
 	<script src="{{ asset('/js/services/bootstrap.min.js') }}"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!--AngularJS-->
 	<script src="{{ asset('/js/services/angular.min.js') }}"></script> <!-- load angular -->
