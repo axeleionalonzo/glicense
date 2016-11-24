@@ -5,6 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Request;
+use Log;
 
 class ApiLicenseController extends Controller {
 
@@ -31,7 +32,8 @@ class ApiLicenseController extends Controller {
         [
             'act_code'			=> 'required|unique:tsqgeointel_activation,act_code' . ($id ? ",$id" : ''),
             'organization'		=> 'required',
-            'status'			=> 'required|boolean',
+            'status'			=> 'required',
+            'device_code'		=> 'required',
             // 'device_code'		=> 'required|unique:tsqgeointel_activation,device_code' . ($id ? ",$id" : ''),
             'project'			=> 'required',
             'act_date'			=> 'required'
@@ -58,7 +60,9 @@ class ApiLicenseController extends Controller {
 	{	
         // validate
         // read more on validation at http://laravel.com/docs/validation
+        // $licenses = Request::get('licensedata');
         $validator = Validator::make(Request::all(), ApiLicenseController::rules());
+		// Log::error($licenses[0]);
 
         if ($validator->fails()) {
 			return response()->json(array(
@@ -66,7 +70,6 @@ class ApiLicenseController extends Controller {
 				'status'	=> $validator->messages()
 				));
         } else {
-
 			$license = ActCode::create(Request::all());
 			return response()->json(array(
 				'success'	=> true,

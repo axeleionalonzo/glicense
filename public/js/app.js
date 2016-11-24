@@ -5,9 +5,12 @@ var app = angular.module('licenseApp', [], function($interpolateProvider) {
 
 app.controller('licenseController', function($scope, $interval, $http) {
 
-	$scope.licenses = [];
 	$scope.loading = false;
+	$scope.licenses = [];
+	$scope.genData = [];
 	$scope.act_date = "...";
+	$scope.genData.status = 0;
+	$scope.genData.toGenerate = 1;
 
 	// controls the ticking time on adding a license
 	var tick = function() {
@@ -16,8 +19,20 @@ app.controller('licenseController', function($scope, $interval, $http) {
 	tick();
 	$interval(tick, 1000);
 
+	// handler controllers
+	function handlers() {
+		$("#draggable").draggable();
+	}
+
+	// parse string and int with 000
+	function pad (str, max) {
+		str = str.toString();
+		return str.length < max ? pad("0" + str, max) : str;
+	}
+
 	// loads the licenses
 	$scope.init = function() {
+		handlers(); // load handlers
 		$scope.loading = true;
 
 		$http.get('./api/license').
@@ -118,8 +133,46 @@ app.controller('licenseController', function($scope, $interval, $http) {
 		}
 	};
 
-	$scope.init();
+	// deletes the motha fucka license :D
+	$scope.generate = function() {
+		$scope.loading = true;
 
+		var licToGen = $scope.genData.toGenerate;
+		var licensesAct = $scope.genData.act_code;
+
+		if (licToGen) {
+			var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
+			var codeIndex = 1;
+			for (var i = licToGen - 1; i >= 0; i--) {
+				var act_code = licensesAct + pad(codeIndex, 3);
+
+				$http.post('./api/license', {
+					act_code		: act_code,
+					organization 	: $scope.genData.organization,
+					status			: $scope.genData.status,
+					device_code		: 0,
+					project			: $scope.genData.project,
+					act_date		: act_date
+				}).success(function(data, status, headers, config) {
+					if (data.success) {
+						$scope.licenses.push(data.license); // adds the new license to the view
+						$('#addLicenseModal').modal('hide');
+						$scope.genData = ""; // clears the input fields
+						$scope.genData.toGenerate = 1;
+						$scope.loading = false;
+					} else {
+						$.each(data.status, function(field, message ) {
+							console.debug(field + ": " + message );
+						});
+					}
+				});
+
+				codeIndex++;
+			}
+		}
+	};
+
+	$scope.init();
 });
 
 // nothing fancy custom directives // =====================================================/
@@ -128,5 +181,19 @@ app.directive('licenses', function() {
   return {
     restrict: 'E',
     templateUrl: 'js/templates/licenses.html'
+  };
+});
+
+app.directive('licmenu', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/lic-menu.html'
+  };
+});
+
+app.directive('addlicense', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/add-license.html'
   };
 });

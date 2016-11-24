@@ -20,6 +20,11 @@ table, div.table-responsive {
 	border: 0 !important;
 }
 
+
+.menu {
+	margin-bottom: 10px;
+}
+
 .inLineTable {
 	/*padding-left: 30px;*/
 	padding-right: 50px;
@@ -29,8 +34,13 @@ table, div.table-responsive {
 	margin-bottom: 75px;
 }
 
-.menu {
-	margin-bottom: 10px;
+.form-first  {
+	padding-left: 0;
+}
+
+
+.form-last  {
+	padding-right: 0;
 }
 
 .material-icons {
