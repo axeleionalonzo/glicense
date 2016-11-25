@@ -1,7 +1,10 @@
-var app = angular.module('licenseApp', [], function($interpolateProvider) {
+var app = angular.module('licenseApp', ['chieffancypants.loadingBar'], function($interpolateProvider) {
 	$interpolateProvider.startSymbol('<%');
 	$interpolateProvider.endSymbol('%>');
-});
+}).config(function(cfpLoadingBarProvider) {
+	cfpLoadingBarProvider.includeSpinner = false; // toggle spinner
+    cfpLoadingBarProvider.includeBar = true; // toggle loading bar
+})
 
 app.controller('licenseController', function($scope, $interval, $http) {
 
@@ -11,6 +14,7 @@ app.controller('licenseController', function($scope, $interval, $http) {
 	$scope.act_date = "...";
 	$scope.genData.status = 0;
 	$scope.genData.toGenerate = 1;
+	$scope.license = "";
 
 	// controls the ticking time on adding a license
 	var tick = function() {
@@ -22,12 +26,22 @@ app.controller('licenseController', function($scope, $interval, $http) {
 	// handler controllers
 	function handlers() {
 		$("#draggable").draggable();
+		$('[data-toggle="popover"]').popover();
+	    $("#menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("toggled");
+	    });
 	}
 
 	// parse string and int with 000
-	function pad (str, max) {
+	function pad(str, max) {
 		str = str.toString();
 		return str.length < max ? pad("0" + str, max) : str;
+	}
+
+	// handles the verification
+	function verify() {
+
 	}
 
 	// loads the licenses
@@ -62,9 +76,17 @@ app.controller('licenseController', function($scope, $interval, $http) {
 				$scope.license = ""; // clears the input fields
 				$scope.loading = false;
 			} else {
+				messageBox = $("div#snackbar");
+				messageBox.fadeIn("slow"); // show snackbar message
+
 				$.each(data.status, function(field, message ) {
 					console.debug(field + ": " + message );
+					messageBox.html("Something went wrong: "+message);
 				});
+
+
+				// After 3 seconds, remove the show class from DIV
+				setTimeout(function(){ messageBox.fadeOut("slow") }, 4000);
 			}
 		});
 	};
@@ -103,9 +125,16 @@ app.controller('licenseController', function($scope, $interval, $http) {
 				$scope.licenses[index] = data.license;
 				$scope.loading = false;
 			} else {
+				messageBox = $("div#snackbar");
+				messageBox.fadeIn("slow"); // show snackbar message
+
 				$.each(data.status, function(field, message ) {
 					console.debug(field + ": " + message );
+					messageBox.html("Something went wrong: "+message);
 				});
+				
+				// After 3 seconds, remove the show class from DIV
+				setTimeout(function(){ messageBox.fadeOut("slow") }, 4000);
 			}
 		});
 	};
@@ -157,8 +186,17 @@ app.controller('licenseController', function($scope, $interval, $http) {
 					if (data.success) {
 						$scope.licenses.push(data.license); // adds the new license to the view
 						$('#addLicenseModal').modal('hide');
-						$scope.genData = ""; // clears the input fields
+						// removes the filled inputs value
 						$scope.genData.toGenerate = 1;
+						$scope.genData.act_code = "";
+						$scope.genData.organization = "";
+						$scope.genData.project = "";
+						// reset errors on the input
+						$scope.licgenform.$setPristine();
+						$scope.licgenform.$setUntouched();
+
+						// $('div[class="input-group"]').removeClass('has-error');
+						// $('div[class="form-group"]').removeClass('has-error');
 						$scope.loading = false;
 					} else {
 						$.each(data.status, function(field, message ) {
@@ -179,21 +217,18 @@ app.controller('licenseController', function($scope, $interval, $http) {
 // retrieves the licenses view from licenses.html
 app.directive('licenses', function() {
   return {
-    restrict: 'E',
     templateUrl: 'js/templates/licenses.html'
   };
 });
 
-app.directive('licmenu', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'js/templates/lic-menu.html'
-  };
-});
+// app.directive('licmenu', function() {
+//   return {
+//     templateUrl: 'js/templates/lic-menu.html'
+//   };
+// });
 
 app.directive('addlicense', function() {
   return {
-    restrict: 'E',
     templateUrl: 'js/templates/add-license.html'
   };
 });

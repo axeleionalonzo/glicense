@@ -4,25 +4,25 @@
 		<h4 class="modal-title" id="myModalLabel">Generate License</h4>
 	</div>
 	<div class="modal-body">
-		<form>
+		<form name="licgenform">
 			<div class="form-group col-md-6 form-first">
 				<label for="exampleInputPassword1">Activation Code</label>
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Prefix" ng-model="genData.act_code">
+				<div class="input-group" ng-class="{ 'has-error': licgenform.act_code.$touched && licgenform.act_code.$invalid }">
+					<input name="act_code" type="text" class="form-control" placeholder="Prefix" ng-model="genData.act_code" required>
 					<div class="input-group-addon">000</div>
 				</div>
 			</div>
-			<div class="form-group col-md-6 form-last">
+			<div class="form-group col-md-6 form-last" ng-class="{ 'has-error': licgenform.organization.$touched && licgenform.organization.$invalid }">
 				<label for="exampleInputPassword1">Organization</label>
-				<input type="text" class="form-control" placeholder="Organization" ng-model="genData.organization">
+				<input name="organization" type="text" class="form-control" placeholder="Organization" ng-model="genData.organization" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-class="{ 'has-error': licgenform.project.$touched && licgenform.project.$invalid }">
 				<label for="exampleInputPassword1">Project</label>
-				<input type="text" class="form-control" placeholder="Project" ng-model="genData.project">
+				<input name="project" type="text" class="form-control" placeholder="Project" ng-model="genData.project" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-class="{ 'has-error': licgenform.toGenerate.$touched && licgenform.toGenerate.$invalid }">
 				<label for="exampleInputPassword1">Licenses to generate</label>
-				<input type="number" class="form-control" step="1" min="0" placeholder="Licenses to generate" ng-model="genData.toGenerate">
+				<input name="toGenerate" type="number" class="form-control" step="1" min="0" placeholder="Licenses to generate" ng-model="genData.toGenerate" required>
 			</div>
 			<div class="form-group">
 				<div class="btn-group" data-toggle="buttons">
@@ -38,6 +38,6 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-		<button type="button" class="btn btn-primary" ng-click="generate()">Generate</button>
+		<button type="button" class="btn btn-primary" ng-click="generate()" ng-disabled="licgenform.$invalid">Generate</button>
 	</div>
 </div>
