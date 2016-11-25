@@ -1,3 +1,7 @@
+body, table {
+	background-color: #F5F5F5;
+}
+
 td > input[type='text'], td > input[type='number'], td select
 {
     display:block; /*this will make the text box fill the horizontal space of the its container td*/
@@ -7,19 +11,47 @@ td > input[type='text'], td > input[type='number'], td select
     margin: 0;
     background-color: transparent;
 }
+tr {
+	background-color: #fff;
+}
 td.editable
 {
     padding: 0 !important;
     margin: 0 !important;
 }
+th.long
+{
+	min-width: 175px;
+}
 td.buttons, th.buttons {
 	border: 0 !important;
-	background-color: #fff !important;
+	background-color: #F5F5F5 !important; 
 }
 table, div.table-responsive {
 	border: 0 !important;
 }
 
+@media (min-width: 1200px) {
+	.container {
+	    width: 100%;
+	}
+}
+
+.input-group-addon {
+	border-left: 0;
+}
+
+nav.navbar {
+  border-radius: 0 !important;
+}
+
+.sidebar-nav a {
+ 	color: #eee !important;
+}
+
+.makemewhite {
+	background-color: #fff;
+}
 
 .menu {
 	margin-bottom: 10px;
@@ -34,10 +66,20 @@ table, div.table-responsive {
 	margin-bottom: 75px;
 }
 
+
+@media (max-width: 1000px) {
+	.form-first  {
+		padding-right: 0;
+	}
+
+	.form-last  {
+		padding-left: 0;
+	}
+}
+
 .form-first  {
 	padding-left: 0;
 }
-
 
 .form-last  {
 	padding-right: 0;
@@ -75,4 +117,60 @@ table, div.table-responsive {
 	font-size: 26px;
 	vertical-align: middle !important;
 	text-align: center;
+}
+
+
+/*SNACKBAR***************************************************************/
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    display: none; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #000; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+.header {
+	padding-right: 20px;
+	padding-left: 20px;
+	background-color: #fff;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.header h1.title {
+	margin-top: 0;
+}
+
+.table-container {
+	padding: 0;
+}
+
+@media screen and (max-width: 767px) {
+	.table-responsive > .table-bordered > thead > tr > th:first-child, .table-responsive > .table-bordered > tbody > tr > th:first-child, .table-responsive > .table-bordered > tfoot > tr > th:first-child, .table-responsive > .table-bordered > thead > tr > td:first-child, .table-responsive > .table-bordered > tbody > tr > td:first-child, .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+	    border-left: 1px solid #E0E0E0;
+	    border-bottom: 1px solid #E0E0E0;
+	}
+}
+
+.instruction {
+	padding-top: 10px;
+}
+
+.instruction > p {
+	margin-bottom: 5px;
+}
+
+span.info {
+	background-color: #E3F2FD;	
+}
+
+span.warning {
+	background-color: #FFFDE7;	
 }

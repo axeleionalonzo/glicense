@@ -3,12 +3,12 @@
 		<!-- On rows -->
 		<!-- <th class="buttons"></th> -->
 		<th class="active">#</th>
-		<th class="">Activation code</th>
+		<th class="long">Activation code</th>
 		<th class="">Organization</th>
 		<th class="">Status</th>
-		<th class="">Device code</th>
+		<th class="long">Device code</th>
 		<th class="">Project</th>
-		<th class="">Date</th>
+		<th class="long">Date</th>
 		<th class="buttons"></th>
 		<!-- iterates the licenses -->
 		<tr id="<% license.id %>" ng-repeat='license in licenses' ng-class="license.status==1 ? 'info' : ''" ng-dblclick="getLicense($index)" >
@@ -27,7 +27,7 @@
 				<i class="material-icons flatBtn-success" ng-click="updateLicense($index)" ng-show="license.editing">done</i>
 			</td>
 		</tr>
-		<tr>
+		<tr class="warning">
 			<!-- <td class="buttons"></td> -->
 			<td class="active">...</td>
 			<td class="editable"><input type="text" ng-model="license.act_code"></td>
