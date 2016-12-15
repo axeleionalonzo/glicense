@@ -7,8 +7,9 @@
 	<title>License</title>
 
 
-	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-	<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+	<!-- Styles -->
+    @include('layout.style')
+	<link href='//fonts.googleapis.com/css?family=Lato:300,100' rel='stylesheet' type='text/css'>
 
 	<style>
 		.bodeh {
@@ -34,45 +35,33 @@
 		}
 
 		.title-bodeh {
+			display: none;
 			font-size: 96px;
 			margin-bottom: 40px;
 		}
 
 		.quote-bodeh {
+			display: none;
+			font-weight: 300;
 			font-size: 24px;
+		}
+
+		.geo {
+			color: #2E7D32;
+		}
+
+		.intel {
+			color: #3F51B5;
 		}
 	</style>
 </head>
 </body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle Navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">License</a>
-			</div>
-
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					@if (Auth::guest())
-						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
-					@else
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-							</ul>
-						</li>
-					@endif
+	<nav class="top-nav white">
+		<div class="nav-container">
+			<div class="nav-wrapper">
+				<ul class="right default-text">
+					<li><a href="{{ url('/auth/login') }}">Login</a></li>
+					<li><a href="{{ url('/auth/register') }}">Register</a></li>
 				</ul>
 			</div>
 		</div>
@@ -81,7 +70,7 @@
 	<div class="bodeh">
 		<div class="container-bodeh">
 			<div class="content-bodeh">
-				<div class="title-bodeh">Laravel 5</div>
+				<div class="title-bodeh"><span class="geo">Geo</span> <span class="intel">Intel</span></div>
 				<div class="quote-bodeh">{{ Inspiring::quote() }}</div>
 			</div>
 		</div>
@@ -90,4 +79,10 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(function(){
+			$(".title-bodeh").fadeIn(1000);
+			$(".quote-bodeh").delay(1000).fadeIn(1000);
+		});
+	</script>
 </html>

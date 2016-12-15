@@ -6,34 +6,20 @@
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-	<title>License</title>
+	<title>Licenses</title>
 
 	<!-- Styles -->
-	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/simple-sidebar.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/loading-bar.css') }}" rel="stylesheet">
+    @include('layout.style')
 
-	<!-- Fonts -->
-	<link href="//fonts.googleapis.com/css?family=Roboto:700,400,300" rel="stylesheet" type="text/css">
-	<link href="{{ asset('/css/material-icon.css') }}" rel="stylesheet">
-
-	<!-- Scripts -->
-	<script src="{{ asset('/js/services/jquery.min.js') }}"></script>
-	<script src="{{ asset('/js/services/bootstrap.min.js') }}"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-	<!--AngularJS-->
-	<script src="{{ asset('/js/services/angular.min.js') }}"></script> <!-- load angular -->
-	<script src="{{ asset('/js/services/jquery.floatThead.min.js') }}"></script>
-	<script src="{{ asset('/js/services/angular-validator.min.js') }}"></script>
-	<script src="{{ asset('/js/services/loading-bar.js') }}"></script>
-	<script src="{{ asset('/js/app.js') }}"></script>
 </head>
 <body>
 
+    @if (!Auth::guest())
     <div id="wrapper" ng-app="licenseApp" ng-controller="licenseController">
+    @endif
 
+
+        @if (!Auth::guest())
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -43,91 +29,117 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#addLicenseModal">Add License</a>
+                    <a href="#addLicenseModal" id="addlicense">Add License</a>
                 </li>
-                <!-- <li>
-                    <a href="#">Shortcuts</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li> -->
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
+        @endif
 
         <!-- Navbar wrapper -->
-		<nav class="navbar navbar-default makemewhite">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle Navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#menu-toggle" id="menu-toggle">License</a>
-				</div>
-
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="{{ url('/') }}">Home</a></li>
-					</ul>
-
-					<ul class="nav navbar-nav navbar-right">
-						@if (Auth::guest())
+		<ul id="userdropdown" class="dropdown-content">
+			<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+		</ul>
+		<nav class="top-nav white">
+			<div class="nav-container">
+				<div class="nav-wrapper">
+					@if (Auth::guest())
+						<a href="#" data-activates="mobile-demo" class="button-collapse grey-text text-darken-3"><i class="material-icons">menu</i></a>
+						<ul class="right hide-on-med-and-down default-text">
+							<li><a href="{{ url('/') }}">Home</a></li>
 							<li><a href="{{ url('/auth/login') }}">Login</a></li>
 							<li><a href="{{ url('/auth/register') }}">Register</a></li>
-						@else
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-								</ul>
-							</li>
-						@endif
-					</ul>
+						</ul>
+						<ul class="side-nav default-text" id="mobile-demo">
+							<li><a href="{{ url('/') }}">Home</a></li>
+							<li><a href="{{ url('/auth/login') }}">Login</a></li>
+							<li><a href="{{ url('/auth/register') }}">Register</a></li>
+						</ul>
+					@else
+					<div class="brand-logo">
+						<a href="#menu-toggle" id="menu-toggle" class="default-text">Licenses</a>
+					</div>
+						<!-- Dropdown Trigger -->
+						<ul class="pull-right default-text">
+							<li><a class="dropdown-button" href="#!" data-activates="userdropdown">{{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a></li>
+						</ul>
+					@endif
 				</div>
 			</div>
 		</nav>
         <!-- /Navbar wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+        <div class="contentbox" id="page-content-wrapper content">
             <div class="container-fluid">
                 <div class="row">
-                	<div class="jumbotron header">
-	                    <h1 class="title">How to use ..</h1>
-
-	                    <div class="instruction">
-		                    <p>Active Licenses are <span class="info">highlighted as blue</span>.</p>
-		                    <p>Generate multiple licenses using the sidemenu.</p>
-		                    <p>You can quick add License with the form <span class="warning">highlighted as yellow</span> below.</p>
-		                    <p>Double click the row of the license you want to update.</p>
-	                    </div>
+        			@if (!Auth::guest())
+	                <div class="row jumbotronbox">
+						<div class="col s12 m12">
+							<div class="card">
+								<div class="card-content">
+									<i id="close_instruction" class="material-icons small up pull-right">close</i>
+									<span class="card-title">How to use ..</span>
+						            <p >Active Licenses are <span class="locked">highlighted as blue</span>.</p>
+						            <p >Generate multiple licenses using the sidemenu.</p>
+						            <p >You can quick add License with the form <span class="unlocked">highlighted as green</span> below.</p>
+						            <p >Double click the row of the license you want to update.</p>
+								</div>
+							</div>
+						</div>
 	                </div>
+        			@endif
 
-					@yield('content')
-
-					<div id="snackbar">...</div>
+	                <div class="row licenses">
+						@yield('content')
+	                </div>
                 </div>
             </div>
+            <!-- forces the footer at the bottom if there is no content :D -->
         </div>
         <!-- /#page-content-wrapper -->
 
+        <!-- FOOTER -->
+		<footer class="page-footer white footer">
+			<div class="container">
+				<div class="row valign-wrapper">
+					<div class="valign col s3 geoimgfooterbox">
+						<img class="geofooter" src="{{ asset('/img/geo.png') }}">
+					</div>
+					<div class="valign col s3 geolabelfooterbox">
+						<h5 class="default-text">Geo Intel</h5>
+						<p class="black-text text-lighten-4">Get the app.</p>
+					</div>
+					<div class="valign col s4 offset-s2">
+						<a href="https://play.google.com/store/apps/details?id=com.tecsq.geointel&hl=en" >
+			    			<img class="googleplay" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">
+			    		</a>
+						<!-- <h5 class="default-text">Links</h5>
+						<ul>
+							<li><a class="black-text text-lighten-3" href="#!">Link 1</a></li>
+							<li><a class="black-text text-lighten-3" href="#!">Link 2</a></li>
+							<li><a class="black-text text-lighten-3" href="#!">Link 3</a></li>
+							<li><a class="black-text text-lighten-3" href="#!">Link 4</a></li>
+						</ul> -->
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container black-text text-lighten-4">
+					© 2016 All Rights Reserved
+					<a class="black-text text-lighten-4 right" href="http://tecsq.com/">TEC Square Solutions Inc.</a>
+				</div>
+			</div>
+		</footer>
+        <!-- /#FOOTER -->
+
+    @if (!Auth::guest())
     </div>
     <!-- /#wrapper -->
+    @endif
+
+    <!-- Scripts -->
+    @include('layout.script')
 
 </body>
 </html>

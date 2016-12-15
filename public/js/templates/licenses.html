@@ -1,42 +1,95 @@
-<div class="table-responsive addMarginBottom">
-	<table class="table table-bordered">
-		<!-- On rows -->
-		<!-- <th class="buttons"></th> -->
-		<th class="active">#</th>
-		<th class="long">Activation code</th>
-		<th class="">Organization</th>
-		<th class="">Status</th>
-		<th class="long">Device code</th>
-		<th class="">Project</th>
-		<th class="long">Date</th>
-		<th class="buttons"></th>
+<table class="responsive-table tablebox fixedheader">
+	<thead>
+		<tr class="sortable">
+			<!-- <th data-field="id" class="grey lighten-3">#</th> -->
+			<th data-field="index">#</th>
+			<th data-field="act_code" class="">
+				<a href="" ng-click="sortType = 'act_code'; sortReverse = !sortReverse">Activation code 
+					<i ng-show="sortType == 'act_code' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'act_code' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="organization" class="">
+				<a href="" ng-click="sortType = 'organization'; sortReverse = !sortReverse">Organization 
+					<i ng-show="sortType == 'organization' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'organization' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="status" class="">
+				<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">Status 
+					<i ng-show="sortType == 'status' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'status' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="device_code" class="">
+				<a href="" ng-click="sortType = 'device_code'; sortReverse = !sortReverse">Device code 
+					<i ng-show="sortType == 'device_code' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'device_code' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="project" class="">
+				<a href="" ng-click="sortType = 'project'; sortReverse = !sortReverse">Project 
+					<i ng-show="sortType == 'project' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'project' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="act_date" class="">
+				<a href="" ng-click="sortType = 'act_date'; sortReverse = !sortReverse">Date 
+					<i ng-show="sortType == 'act_date' && !sortReverse" class="material-icons">arrow_drop_down</i>
+					<i ng-show="sortType == 'act_date' && sortReverse" class="material-icons">arrow_drop_up</i>
+				</a>
+			</th>
+			<th data-field="buttons" class="buttons centered"></th>
+		</tr>
+	</thead>
+	<tbody>
 		<!-- iterates the licenses -->
-		<tr id="<% license.id %>" ng-repeat='license in licenses' ng-class="license.status==1 ? 'info' : ''" ng-dblclick="getLicense($index)" >
+		<tr id="[[ license.id ]]" ng-repeat='license in licenses | orderBy:sortType:sortReverse | filter:searchLicense' ng-class="{ 'blue lighten-5' : license.status, 'green lighten-5' : license.editing }" ng-dblclick="getLicense(license)" >
 			<!-- <td class="buttons"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td> -->
-			<td class="active"><% license.id %></td>
+			<!-- <td class="grey lighten-3">[[ license.id ]]</td> -->
+			<td class="grey lighten-3 index">[[ $index+1 ]]</td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" readonly></td>
 			<td class="editable"><input data="canEdit" type="number" step="1" min="0" max="1" ng-model="license.status" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.device_code" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.project" readonly></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_date" readonly></td>
-			<td class="buttons">
+			<td class="buttons center">
 				<!-- delete button -->
-				<i class="material-icons flatBtn-danger" ng-click="deleteLicense($index)" ng-show="!license.editing && !license.status">delete</i>
+				<i class="material-icons" ng-click="toDelete(license)" ng-show="!license.editing && !license.status && !license.loading">delete</i>
 				<!-- update button -->
-				<i class="material-icons flatBtn-success" ng-click="updateLicense($index)" ng-show="license.editing">done</i>
+				<i class="material-icons" ng-click="updateLicense(license)" ng-show="license.editing && !license.loading">done</i>
+
+				<div class="loading" ng-show="license.loading">
+					<div class="loading-bar"></div>
+					<div class="loading-bar"></div>
+					<div class="loading-bar"></div>
+					<div class="loading-bar"></div>
+				</div>
 			</td>
 		</tr>
-		<tr class="warning">
+		<tr class="">
 			<!-- <td class="buttons"></td> -->
-			<td class="active">...</td>
-			<td class="editable"><input type="text" ng-model="license.act_code"></td>
-			<td class="editable"><input type="text" ng-model="license.organization"></td>
-			<td class="editable"><input type="number" step="1" min="0" max="1" ng-model="license.status"></td>
-			<td class="editable"><input type="text" ng-model="license.device_code"></td>
-			<td class="editable"><input type="text" ng-model="license.project"></td>
-			<td class="editable"><input type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
-			<td class="buttons"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
+			<td class="index grey lighten-3">...</td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.act_code"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.organization"></td>
+			<td class="editable"><input class="green lighten-5" type="number" step="1" min="0" max="1" ng-model="license.status"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.device_code"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.project"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
+			<td class="buttons center green lighten-5"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
 		</tr>
-	</table>
-</div>
+	</tbody>
+</table>
+<!-- 
+<div class="fixed-action-btn horizontal licensehandlerb-btn">
+	<a class="btn-floating btn-large red">
+		<i class="large material-icons">mode_edit</i>
+	</a>
+	<ul>
+		<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+		<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+	</ul>
+</div> -->

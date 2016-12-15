@@ -22,6 +22,7 @@ Route::get('/', 'WelcomeController@index');
 // Landing page for REGISTERED users
 Route::get('license', 'LicenseController@index');
 Route::get('home', 'LicenseController@index');
+Route::get('auth', 'LicenseController@index');
 
 
 /*
@@ -53,7 +54,6 @@ Route::group(array('prefix' => 'api'), function() {
 // Catch for invalid routes
 // Redirects to the welcome page
 // Route::any('{catchall}', 'WelcomeController@index')->where('catchall', '(.*)');
-
 /*
 |
 | Route everything else to the Angular page - angular will handle the routing
