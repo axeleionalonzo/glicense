@@ -137,9 +137,10 @@ class ApiLicenseController extends Controller {
 		if (Auth::check()) {
 	        // validate
 	        // read more on validation at http://laravel.com/docs/validation
-	        $validator = Validator::make(Request::all(), ApiLicenseController::rules($id, [
-	        	'device_code'	=> 'unique:tsqgeointel_activation,device_code' . ($id ? ",$id" : '')
-	        	]));
+	        $validator = Validator::make(Request::all(), ApiLicenseController::rules($id
+	        	// , ['device_code'	=> 'unique:tsqgeointel_activation,device_code' . ($id ? ",$id" : '')]
+	        	// adds validation when edit mode
+	        	));
 
 	        if ($validator->fails()) {
 				return response()->json(array(

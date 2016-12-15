@@ -1,5 +1,5 @@
 :root {
-  --main-bg-color: #F5F5F5;
+  --main-bg-color: #eeeeee;
   --border-mn-color: #d0d0d0;
   --white: #FFF;
   --black: #000;
@@ -120,21 +120,21 @@ tr.sortable a {
 /*small screen*/
 @media (min-width: 800px) {
   .has-prefix {
-    width: 89% !important;
+    width: 70% !important;
   }
 
   .the-prefix {
-    width: 6% !important;
+    width: 25% !important;
   }
 }
 /*xtra small screen*/
 @media (max-width: 799px) {
   .has-prefix {
-    width: 100% !important;
+    width: 70% !important;
   }
 
   .the-prefix {
-    display: none;
+    width: 25% !important;
   }
 }
 
@@ -410,19 +410,19 @@ input#search {
   animation: loading 1s ease-in-out infinite;
 }
 .loading-bar:nth-child(1) {
-  background-color: #424242;
+  background-color: var(--grey-900);
   animation-delay: 0;
 }
 .loading-bar:nth-child(2) {
-  background-color: #424242;
+  background-color: var(--grey-900);
   animation-delay: 0.09s;
 }
 .loading-bar:nth-child(3) {
-  background-color: #424242;
+  background-color: var(--grey-900);
   animation-delay: .18s;
 }
 .loading-bar:nth-child(4) {
-  background-color: #424242;
+  background-color: var(--grey-900);
   animation-delay: .27s;
 }
 
@@ -437,7 +437,13 @@ input#search {
     transform: scale(1);
   }
 }
-
+.dropdown-content li {
+    min-height: 20px !important;
+}
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #3F51B5 !important;
+  padding: 10px 12px !important;
+}
 
 /*NG ANIMATE*/
 /*.loading, .material-icons {

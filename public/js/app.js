@@ -1,4 +1,4 @@
-var app = angular.module('licenseApp', ['ngAnimate', 'chieffancypants.loadingBar'], function($interpolateProvider) {
+var app = angular.module('licenseApp', ['chieffancypants.loadingBar'], function($interpolateProvider) {
 	$interpolateProvider.startSymbol('[[');
 	$interpolateProvider.endSymbol(']]');
 }).config(function(cfpLoadingBarProvider) {
@@ -8,7 +8,6 @@ var app = angular.module('licenseApp', ['ngAnimate', 'chieffancypants.loadingBar
 
 app.controller('licenseController', function($scope, $interval, $http, $filter) {
 
-	$scope.loading = false;
 	$scope.licenses = [];
 	$scope.genData = [];
 	$scope.act_date = "...";
@@ -19,20 +18,27 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 	$scope.searchLicense = ""; // set the default search/filter term
 	$scope.placeholder = "I'm feeling lucky"; // set the default search/filter term
 
+	// firebase
+	var dbRef = firebase.database().ref().child('greeting');
+	dbRef.on('value', snap => $scope.placeholder = snap.val());
+
 	// controls the ticking time on adding a license
 	var tick = function() {
+
 		$scope.act_date = new Date();
 	}
 	tick();
 	$interval(tick, 1000);
 
 	var onModalHide = function() {
+
 		$scope.licgenform.$setPristine();
 		$scope.licgenform.$setUntouched();
 	};
 
 	// handler controllers
 	function handlers() {
+
 	    $("#menu-toggle").click(function(e) {
 	        e.preventDefault();
 	        $("#wrapper").toggleClass("toggled");
@@ -50,18 +56,21 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 
 	// handler controllers
 	function removeHandlers() {
+
 	    $("#menu-toggle").off();
 		$("#close_instruction").off();
 		$("#addLicenseModal").off();
 	}
 
 	function refreshHandlers() {
+
 		removeHandlers();
 		handlers();
 	}
 
 	// parse string and int with 000
 	function pad(str, max) {
+
 		str = str.toString();
 		return str.length < max ? pad("0" + str, max) : str;
 	}
@@ -73,19 +82,16 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 
 	// loads the licenses
 	$scope.init = function() {
-		$scope.loading = true;
 
 		$http.get('./api/license').
 		success(function(data, status, headers, config) {
 			$scope.licenses = data;
-			$scope.loading = false;
 			refreshHandlers(); // load handlers
 		});
 	}
 
 	// adds license
 	$scope.addLicense = function() {
-		$scope.loading = true;
 
 		// gets js datetime ready for mysql datetime
 		var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
@@ -101,7 +107,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 			if (data.success) {
 				$scope.licenses.push(data.license); // adds the new license to the view
 				$scope.license = ""; // clears the input fields
-				$scope.loading = false;
 				refreshHandlers(); // load handlers
 			} else {
 				Materialize.toast("Something went wrong!", 4000, 'red');
@@ -115,7 +120,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 
 
 	$scope.toDelete = function(license) {
-		$scope.loading = true;
 
     	var index = $scope.licenses.indexOf($filter('filter')($scope.licenses, {id: license.id })[0]);
 		$scope.confirmation = $scope.licenses[index].act_code;
@@ -128,7 +132,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 	// gets the license details ready for edit
 	// makes the table row editabel
 	$scope.getLicense = function(license) {
-		$scope.loading = true;
 
 		// change the button to edit mode using angular filter array
 		$filter('filter')($scope.licenses, {id: license.id })[0].editing = 1;
@@ -139,7 +142,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 
 	// updates the editable license
 	$scope.updateLicense = function(license) {
-		$scope.loading = true;
+
 		var license = $filter('filter')($scope.licenses, {id: license.id })[0];
 		$filter('filter')($scope.licenses, {id: license.id })[0].loading = 1; // show loading
 
@@ -158,9 +161,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 		}).success(function(data, status, headers, config) {
 			if (data.success) {
     			var index = $scope.licenses.indexOf($filter('filter')($scope.licenses, {id: license.id })[0]);
-				$filter('filter')($scope.licenses, {id: license.id })[0].loading = 0;
 				$scope.licenses[index] = data.license;
-				$scope.loading = false;
 				refreshHandlers(); // load handlers
 			} else {
 				Materialize.toast("Something went wrong!", 4000, 'red');
@@ -169,11 +170,14 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 					Materialize.toast(message, 4000);
 				});
 			}
+			
+			$filter('filter')($scope.licenses, {id: license.id })[0].loading = 0; // stop loading
 		});
 	};
 
 	// deletes the motha fucka license :D
 	$scope.deleteLicense = function(index) {
+
 		$scope.loading = true;
 		var license = $scope.licenses[index];
 
@@ -190,20 +194,23 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 		}, function errorCallback(response) {
 			// called asynchronously if an error occurs
 			// or server returns response with an error status.
+			$scope.loading = false;
 			Materialize.toast("Something went wrong: "+message, 4000, 'red');
 		});
 	};
 
 	// deletes the motha fucka license :D
 	$scope.generate = function() {
+
 		$scope.loading = true;
 
 		var licToGen = $scope.genData.toGenerate;
 		var licensesAct = $scope.genData.act_code;
+		var prefix = $scope.genData.prefix;
 
 		if (licToGen) {
 			var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
-			var codeIndex = 1;
+			var codeIndex = prefix;
 			for (var i = licToGen - 1; i >= 0; i--) {
 				var act_code = licensesAct + pad(codeIndex, 3);
 
@@ -223,6 +230,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 						$scope.genData.act_code = "";
 						$scope.genData.organization = "";
 						$scope.genData.project = "";
+						$scope.genData.prefix = "";
 						// reset errors on the input
 						$scope.licgenform.$setPristine();
 						$scope.licgenform.$setUntouched();
@@ -231,6 +239,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter) 
 						// $('div[class="form-group"]').removeClass('has-error');
 						$scope.loading = false;
 					} else {
+						$scope.loading = false;
 						Materialize.toast("Something went wrong!", 4000, 'red');
 						$.each(data.status, function(field, message ) {
 							console.debug(field + ": " + message );

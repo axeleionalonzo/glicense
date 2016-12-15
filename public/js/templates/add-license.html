@@ -8,7 +8,7 @@
 				<div class="form-group">
 					<div class="input-field col s6">
 						<input id="act_code" type="text" name="act_code" class="has-prefix" ng-class="{ 'invalid': licgenform.act_code.$touched && licgenform.act_code.$invalid }" ng-model="genData.act_code" required>
-						<input class="the-prefix" type="text" readonly value="000" ng-class="{ 'invalid': licgenform.act_code.$touched && licgenform.act_code.$invalid }" >
+						<input id="prefix" class="the-prefix" name="prefix" type="text" value="000" ng-class="{ 'invalid': licgenform.prefix.$touched && licgenform.prefix.$invalid }" ng-model="genData.prefix" required>
 						<label for="act_code">Activation Code</label>
 					</div>
 					<div class="input-field col s6">
