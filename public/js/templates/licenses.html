@@ -48,12 +48,12 @@
 			<!-- <td class="buttons"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td> -->
 			<!-- <td class="grey lighten-3">[[ license.id ]]</td> -->
 			<td class="grey lighten-3 index">[[ $index+1 ]]</td>
-			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" readonly></td>
-			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" readonly></td>
-			<td class="editable"><input data="canEdit" type="number" step="1" min="0" max="1" ng-model="license.status" readonly></td>
-			<td class="editable"><input data="canEdit" type="text" ng-model="license.device_code" readonly></td>
-			<td class="editable"><input data="canEdit" type="text" ng-model="license.project" readonly></td>
-			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_date" readonly></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" ng-readonly="!license.editing"></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" ng-readonly="!license.editing"></td>
+			<td class="editable"><input data="canEdit" type="number" step="1" min="0" max="1" ng-model="license.status" ng-readonly="!license.editing"></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.device_code" ng-readonly="!license.editing"></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.project" ng-readonly="!license.editing"></td>
+			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_date" ng-readonly="!license.editing"></td>
 			<td class="buttons center">
 				<!-- delete button -->
 				<i class="material-icons" ng-click="toDelete(license)" ng-show="!license.editing && !license.status && !license.loading">delete</i>
@@ -71,11 +71,11 @@
 		<tr class="">
 			<!-- <td class="buttons"></td> -->
 			<td class="index grey lighten-3">...</td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.act_code"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.organization"></td>
-			<td class="editable"><input class="green lighten-5" type="number" step="1" min="0" max="1" ng-model="license.status"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.device_code"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="license.project"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.act_code"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.organization"></td>
+			<td class="editable"><input class="green lighten-5" type="number" step="1" min="0" max="1" ng-model="newLic.status"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.device_code"></td>
+			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.project"></td>
 			<td class="editable"><input class="green lighten-5" type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
 			<td class="buttons center green lighten-5"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
 		</tr>

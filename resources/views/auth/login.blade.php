@@ -36,6 +36,7 @@
 							<div class="card-content">
 								<div class="greetingbox">
 									<p class="center grey-text greetings"><?php echo $greetings[array_rand($greetings)]; ?></p>
+									<!-- <p id="geo-greeting" class="center grey-text greetings"></p> -->
 								</div>
 							</div>
 							<div class="card-action">

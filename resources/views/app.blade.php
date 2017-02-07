@@ -11,6 +11,7 @@
 	<!-- Styles -->
     @include('layout.style')
 
+	<link rel="shortcut icon" href="{{ url('/favicon.ico') }}">
 </head>
 <body>
 
