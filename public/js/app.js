@@ -19,6 +19,14 @@ var app = angular.module('licenseApp', ['chieffancypants.loadingBar', 'firebase'
     cfpLoadingBarProvider.includeBar = true; // toggle loading bar
 })
 
+app.controller('loginController', function($scope, $interval, $http, $filter, $firebaseObject, $firebaseArray) {
+
+	$scope.greet = "Hello!";
+	$scope.welcome = ["Hola!","Indo!","Bonjour!","Ciao!","Ola!","Namaste!","Salaam!","Konnichiwa!","Merhaba!","Jambo!","Ni Hau!","Hallo!","Hello!"];
+	$scope.greet = $scope.welcome[Math.floor(Math.random() * $scope.welcome.length)];
+
+});
+
 app.controller('licenseController', function($scope, $interval, $http, $filter, $firebaseObject, $firebaseArray) {
 
 	// download the data into a local object
@@ -45,8 +53,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 
 		$scope.act_date = new Date();
 	}
-	tick();
-	$interval(tick, 1000);
 
 	var onModalHide = function() {
 		$scope.licgenform.$setPristine();
@@ -54,8 +60,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 	};
 
 	// handler controllers
-	function handlers() {
-
+	$scope.handlers = function() {
 	    $("#menu-toggle").click(function(e) {
 	        e.preventDefault();
 	        $("#wrapper").toggleClass("toggled");
@@ -69,20 +74,17 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		$("#addLicenseModal").modal({
 		    complete : onModalHide
 		});
-	}
 
-	// handler controllers
-	function removeHandlers() {
+		$("#genLicenseModal").modal({
+		    complete : onModalHide
+		});
 
-	    $("#menu-toggle").off();
-		$("#close_instruction").off();
-		$("#addLicenseModal").off();
-	}
-
-	function refreshHandlers() {
-
-		removeHandlers();
-		handlers();
+		$("#asdasdasd").click(function(e) {
+			alert("hi");
+	    });
+		
+		tick();
+		$interval(tick, 1000);
 	}
 
 	// parse string and int with 000
@@ -99,18 +101,23 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
 		var timestamp = new Date().valueOf(); // get id based time
 
+		$("#addLicenseModal").modal("close");
+
 		$scope.licenses.$add({
 			"id":			timestamp,
 			"act_code":		$scope.newLic.act_code,
 			"organization":	$scope.newLic.organization,
 			"status":		$scope.newLic.status,
-			"device_code":	$scope.newLic.device_code,
+			"device_code":	$scope.newLic.device_code = 0,
 			"project":		$scope.newLic.project,
 			"act_date":		act_date
 	    }).then(function() {
 			// adds the new license to the view
 			$scope.newLic = ""; // clears the input fields
-			refreshHandlers(); // load handlers
+			$scope.newLic.status = 0;
+			// reset errors on the input
+			$scope.addlicform.$setPristine();
+			$scope.addlicform.$setUntouched();
 		}, function(error) {
 			Materialize.toast("Something went wrong! " + error, 4000, 'red');
 		});
@@ -150,14 +157,12 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 			"project":		licenseData.project,
 			"act_date":		licenseData.act_date
 		};
-		console.log(license);
 
 		// Write the new post's data simultaneously in the posts list and the user's post list.
 		var updates = {};
 		updates['/licenses/' + id] = postData;
 
 		ref.update(updates).then(function() {
-			refreshHandlers(); // load handlers
 		}, function(error) {
 			Materialize.toast("Something went wrong! " + error, 4000, 'red');
 		});
@@ -166,9 +171,9 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 	$scope.toDelete = function(license) {
 
 		var id = license.$id;
-		$scope.confirmation = license.act_code;
+		var licenseData = $scope.licenses.$getRecord(id);
 
-		$('#confirmDelete').modal('open');
+		licenseData.confirmDelete = true;
 
 		$scope.deleteindex = license;
 	};
@@ -186,6 +191,8 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		var licensesAct = $scope.genData.act_code;
 		var prefix = $scope.genData.prefix;
 
+		$("#genLicenseModal").modal("close");
+
 		if (licToGen) {
 			var act_date = $scope.act_date.toISOString().slice(0, 19).replace('T', ' ');
 			var timestamp = new Date().valueOf(); // get id based time
@@ -202,7 +209,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 					"project"		: $scope.genData.project,
 					"act_date"		: act_date
 			    }).then(function() {
-					$('#addLicenseModal').modal('close');
 					// adds the new license to the view
 					$scope.genData = ""; // clears the input fields
 					$scope.genData.toGenerate = 1;
@@ -215,9 +221,9 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 
 				codeIndex++;
 			}
-			refreshHandlers(); // load handlers
 		}
 	};
+	$scope.handlers();
 });
 
 // nothing fancy custom directives // =====================================================/
@@ -239,6 +245,13 @@ app.directive('addlicense', function() {
   return {
   	restrict: 'E',
     templateUrl: 'js/templates/add-license.html'
+  };
+});
+
+app.directive('genlicense', function() {
+  return {
+  	restrict: 'E',
+    templateUrl: 'js/templates/gen-license.html'
   };
 });
 

@@ -18,7 +18,14 @@
 |
 */
 // Landing page for GUEST users
-Route::get('/', 'WelcomeController@index');
+// Route::get('/', 'WelcomeController@index');
+Route::get('/', function() {
+	if (Auth::check()) {
+		return view('license.index');
+	} else {
+		return view('welcome');
+	}
+});
 // Landing page for REGISTERED users
 Route::get('license', 'LicenseController@index');
 Route::get('home', 'LicenseController@index');

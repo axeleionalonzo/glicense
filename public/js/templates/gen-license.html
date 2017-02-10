@@ -1,0 +1,46 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title" id="myModalLabel">Generate License</h4>
+	</div>
+	<div class="modal-body">
+		<form name="licgenform">
+			<div class="col s12 m12 l12">
+				<div class="form-group">
+					<div class="input-field col s6">
+						<input id="act_code" type="text" name="act_code" class="has-prefix" ng-class="{ 'invalid': licgenform.act_code.$touched && licgenform.act_code.$invalid }" ng-model="genData.act_code" required>
+						<input id="prefix" class="the-prefix" type="number" name="prefix" ng-init="genData.prefix=000" ng-class="{ 'invalid': licgenform.prefix.$touched && licgenform.prefix.$invalid }" ng-model="genData.prefix" required>
+						<label for="act_code">Activation Code</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="organization" type="text" name="organization" ng-class="{ 'invalid': licgenform.organization.$touched && licgenform.organization.$invalid }" ng-model="genData.organization" required>
+						<label for="organization">Organization</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-field col s6">
+						<input id="project" type="text" name="project" ng-class="{ 'invalid': licgenform.project.$touched && licgenform.project.$invalid }" ng-model="genData.project" required>
+						<label for="project">Project</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="toGenerate" type="number" step="1" min="1" ng-init="genData.toGenerate=1" name="toGenerate" ng-class="{ 'invalid': licgenform.toGenerate.$touched && licgenform.toGenerate.$invalid }" ng-model="genData.toGenerate" required>
+						<label class="active" for="toGenerate">Licenses to generate</label>
+					</div>
+				</div>
+				<!-- <div class="form-group">
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default">
+							<input type="radio" name="options" value="0" ng-model="genData.status"> Inactive
+						</label>
+						<label class="btn btn-primary">
+							<input type="radio" name="options" value="1" ng-model="genData.status"> Active
+						</label>
+					</div>
+				</div> -->
+			</div>
+		</form>
+	</div>
+</div>
+<div class="modal-footer">
+	<a class="pull-left modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	<a class="waves-effect waves-green btn-flat green white-text" ng-click="generate()" ng-disabled="licgenform.$invalid">Generate</a>
+</div>

@@ -1,4 +1,4 @@
-<table class="responsive-table tablebox fixedheader">
+<table class="responsive-table tablebox fixedheader highlight">
 	<thead>
 		<tr class="sortable">
 			<!-- <th data-field="id" class="grey lighten-3">#</th> -->
@@ -56,7 +56,8 @@
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_date" ng-readonly="!license.editing"></td>
 			<td class="buttons center">
 				<!-- delete button -->
-				<i class="material-icons" ng-click="toDelete(license)" ng-show="!license.editing && !license.status && !license.loading">delete</i>
+				<i class="material-icons" ng-click="toDelete(license)" ng-show="!license.editing && !license.status && !license.loading && !license.confirmDelete">delete</i>
+				<i class="material-icons" ng-click="deleteLicense(deleteindex)" ng-show="license.confirmDelete">delete_forever</i>
 				<!-- update button -->
 				<i class="material-icons" ng-click="updateLicense(license)" ng-show="license.editing && !license.loading">done</i>
 
@@ -68,8 +69,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr class="">
-			<!-- <td class="buttons"></td> -->
+		<!-- <tr class="">
 			<td class="index grey lighten-3">...</td>
 			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.act_code"></td>
 			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.organization"></td>
@@ -78,7 +78,7 @@
 			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.project"></td>
 			<td class="editable"><input class="green lighten-5" type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
 			<td class="buttons center green lighten-5"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
-		</tr>
+		</tr> -->
 	</tbody>
 </table>
 <!-- 

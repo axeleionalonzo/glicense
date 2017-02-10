@@ -1,0 +1,1 @@
+[Fri Feb 10 10:26:51.482201 2017] [:error] [pid 3332:tid 800] [client 127.0.0.1:60281] PHP Parse error:  syntax error, unexpected ';' in C:\\Program Files (x86)\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\geolicense.dev\\storage\\framework\\views\\009ef6afa30442a886ab06668e4b7299 on line 15, referer: http://geolicense.dev:8080/

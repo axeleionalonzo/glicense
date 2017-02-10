@@ -12,5 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
+    mix.sass('app.scss')
+    	.version('css/app.css'); 
+    	// for busting the cache
+    	// lets user know everytime the css is modified
 });

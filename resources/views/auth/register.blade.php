@@ -1,11 +1,36 @@
 @extends('app')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
+
+<div class="container-fluid" ng-app="licenseApp" ng-controller="loginController">
+
+	<!-- Navbar wrapper -->
+	<ul id="userdropdown" class="dropdown-content">
+		<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+	</ul>
+	<nav class="top-nav white">
+		<div class="nav-container">
+			<div class="nav-wrapper">
+				<a href="#" data-activates="mobile-demo" class="button-collapse grey-text text-darken-3"><i class="material-icons">menu</i></a>
+				<ul class="right hide-on-med-and-down default-text">
+					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/auth/login') }}">Login</a></li>
+					<li><a href="{{ url('/auth/register') }}">Register</a></li>
+				</ul>
+				<ul class="side-nav default-text" id="mobile-demo">
+					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/auth/login') }}">Login</a></li>
+					<li><a href="{{ url('/auth/register') }}">Register</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- /Navbar wrapper -->
+
+    <!-- Page Content -->
+    <div class="contentbox container" id="page-content-wrapper content">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -61,5 +86,8 @@
 			</div>
 		</div>
 	</div>
+    <!-- /#page-content-wrapper -->
+
 </div>
+
 @endsection
