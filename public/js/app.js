@@ -17,20 +17,71 @@ var app = angular.module('licenseApp', ['chieffancypants.loadingBar', 'firebase'
 }).config(function(cfpLoadingBarProvider) {
 	cfpLoadingBarProvider.includeSpinner = false; // toggle spinner
     cfpLoadingBarProvider.includeBar = true; // toggle loading bar
-})
+});
 
-app.controller('loginController', function($scope, $interval, $http, $filter, $firebaseObject, $firebaseArray) {
+app.controller('loginController', function($scope, $http) {
 
 	$scope.greet = "Hello!";
 	$scope.welcome = ["Hola!","Indo!","Bonjour!","Ciao!","Ola!","Namaste!","Salaam!","Konnichiwa!","Merhaba!","Jambo!","Ni Hau!","Hallo!","Hello!"];
 	$scope.greet = $scope.welcome[Math.floor(Math.random() * $scope.welcome.length)];
 
+	// get auth methods from database
+	var auth = firebase.auth();
+
+	// getting the elements
+	var txtEmail = $("input#email");
+	var txtPassword = $("input#password");
+	var txtToken = $("input#token");
+	var btnLogin = $("button#login");
+
+	// add login event
+	btnLogin.click(function(e) {
+	    // get email and pass
+	    var email = txtEmail.val();
+	    var pass = txtPassword.val();
+	    var token = txtToken.val();
+
+		// sign in
+		firebase.auth().signInWithEmailAndPassword(email, pass).then(function() {
+		  	// Sign-in successful.
+		  	// Send token to your backend via HTTPS
+			// $http.post('./login', {
+			// 	"_token":			token,
+			// 	"email":			email,
+			// 	"password":			pass
+			// }).then(function successCallback(response) {
+			//   	window.location.replace('/license');
+			// }, function errorCallback(response) {
+			// 	console.log(response);
+			// 	// called asynchronously if an error occurs
+			// 	// or server returns response with an error status.
+			// });
+		}, function(error) {
+			// Handle Errors here.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			console.log(errorMessage);
+		});
+	});
+
+	// check for user state changes
+	// auth.onAuthStateChanged(function(user) {
+	//   if (user) {
+	//     // User is signed in.
+	//     console.log(user);
+	//   } else {
+	//     console.log("no user");
+	//   }
+	// });
 });
 
 app.controller('licenseController', function($scope, $interval, $http, $filter, $firebaseObject, $firebaseArray) {
 
 	// download the data into a local object
 	var ref = firebase.database().ref();
+
+	// get auth methods from database
+	var auth = firebase.auth();
 
 	$scope.licenses = [];
 	$scope.genData = [];
@@ -43,14 +94,12 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 	$scope.placeholder = "I'm feeling lucky"; // set the default search/filter term
 	$scope.licenses = $firebaseArray(ref.child("licenses")); // populate licenses from firebase
 
-	var dBRsearch = ref.child('greetings');
+	var pholder = ref.child('greetings');
 
-	// sync object changes using on()
-	dBRsearch.on('value', snap => $scope.placeholder = snap.val());
+	pholder.on('value', snap => $scope.placeholder = snap.val()); // sync object changes using on()
 
 	// controls the ticking time on adding a license
 	var tick = function() {
-
 		$scope.act_date = new Date();
 	}
 
@@ -79,8 +128,8 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		    complete : onModalHide
 		});
 
-		$("#asdasdasd").click(function(e) {
-			alert("hi");
+		$("a#logout").click(function(e) {
+			auth.signOut();
 	    });
 		
 		tick();

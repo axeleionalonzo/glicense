@@ -24,7 +24,7 @@
 
 	<!-- Navbar wrapper -->
 	<ul id="userdropdown" class="dropdown-content">
-		<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+		<li><a id="logout" href="{{ url('/auth/logout') }}">Logout</a></li>
 	</ul>
 	<nav class="top-nav white">
 		<div class="nav-container">

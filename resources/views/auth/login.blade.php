@@ -51,7 +51,7 @@
 								</div>
 								<div class="card-action">
 									<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
-										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<input id="token"  type="hidden" name="_token" value="{{ csrf_token() }}">
 
 										<div class="row loginform">
 											<div class="form-group">

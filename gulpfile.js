@@ -12,8 +12,15 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss')
-    	.version('css/app.css'); 
+    // mix.sass('app.scss')
+    	// .version('css/app.css'); 
     	// for busting the cache
     	// lets user know everytime the css is modified
+    mix.styles([
+        'style.css',
+        'simple-sidebar.css',
+        'loading-bar.css',
+        'materialize.css',
+        'material-icon.css'
+    ], 'public/css/site.css');
 });
