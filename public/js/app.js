@@ -42,20 +42,21 @@ app.controller('loginController', function($scope, $http) {
 	    var token = txtToken.val();
 
 		// sign in
-		firebase.auth().signInWithEmailAndPassword(email, pass).then(function() {
+		auth.signInWithEmailAndPassword(email, pass).then(function() {
 		  	// Sign-in successful.
 		  	// Send token to your backend via HTTPS
-			// $http.post('./login', {
-			// 	"_token":			token,
-			// 	"email":			email,
-			// 	"password":			pass
-			// }).then(function successCallback(response) {
-			//   	window.location.replace('/license');
-			// }, function errorCallback(response) {
-			// 	console.log(response);
-			// 	// called asynchronously if an error occurs
-			// 	// or server returns response with an error status.
-			// });
+			$http.post('./login', {
+				"_token":			token,
+				"email":			email,
+				"password":			pass
+			}).then(function successCallback(response) {
+			  	window.location.replace('/license');
+			}, function errorCallback(response) {
+				console.log(response);
+				auth.signOut();
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			});
 		}, function(error) {
 			// Handle Errors here.
 			var errorCode = error.code;
