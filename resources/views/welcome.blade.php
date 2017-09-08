@@ -58,7 +58,7 @@
 	<div class="bodeh">
 		<div class="container-bodeh">
 			<div class="content-bodeh">
-				<div class="title-bodeh"><span class="geo">Geo</span> <span class="intel">Intel</span></div>
+				<div class="title-bodeh"><span class="geo">geo</span><span class="intel">HMI</span></div>
 				<div class="quote-bodeh">
 					<div id="quote">
 						{{ Inspiring::quote() }}

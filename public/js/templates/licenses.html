@@ -43,10 +43,8 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr id="[[ license.id ]]" ng-repeat='license in licenses | orderBy:sortType:sortReverse | filter:searchLicense as filteredLicense' ng-class="{'transparent' : license.status, 'yellow lighten-3' : license.editing }" ng-dblclick="getLicense(license)" >
 		<!-- iterates the licenses -->
-		<tr id="[[ license.id ]]" ng-repeat='license in licenses | orderBy:sortType:sortReverse | filter:searchLicense' ng-class="{ 'blue lighten-5' : license.status, 'green lighten-5' : license.editing }" ng-dblclick="getLicense(license)" >
-			<!-- <td class="buttons"><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="license.status" ng-click="getLicense($index)" ></td> -->
-			<!-- <td class="grey lighten-3">[[ license.id ]]</td> -->
 			<td class="grey lighten-3 index">[[ $index+1 ]]</td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.act_code" ng-readonly="!license.editing"></td>
 			<td class="editable"><input data="canEdit" type="text" ng-model="license.organization" ng-readonly="!license.editing"></td>
@@ -69,27 +67,45 @@
 				</div>
 			</td>
 		</tr>
-		<!-- <tr class="">
-			<td class="index grey lighten-3">...</td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.act_code"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.organization"></td>
-			<td class="editable"><input class="green lighten-5" type="number" step="1" min="0" max="1" ng-model="newLic.status"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.device_code"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-model="newLic.project"></td>
-			<td class="editable"><input class="green lighten-5" type="text" ng-value="act_date | date: 'yyyy-MM-dd HH:mm:ss a' " readonly></td>
-			<td class="buttons center green lighten-5"><i class="material-icons flatBtn-success" ng-click="addLicense()">add</i></td>
-		</tr> -->
 	</tbody>
 </table>
-<!-- 
-<div class="fixed-action-btn horizontal licensehandlerb-btn">
-	<a class="btn-floating btn-large red">
-		<i class="large material-icons">mode_edit</i>
-	</a>
-	<ul>
-		<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-		<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-	</ul>
-</div> -->
+
+<!-- URGENT/HOTFIX: data export i dont think this is the right way to do it, but damn it works -->
+<div id="exportData" style="display: none">
+	<table>
+		<thead>
+			<tr>
+				<!-- <th ass="grey lighten-3">#</th> -->
+				<th>
+					<a>Activation code</a>
+				</th>
+				<th>
+					<a>Organization</a>
+				</th>
+				<th>
+					<a>Status</a>
+				</th>
+				<th>
+					<a>Device code</a>
+				</th>
+				<th>
+					<a>Project</a>
+				</th>
+				<th>
+					<a>Date</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr id="[[ license.id ]]" ng-repeat='license in licenses | orderBy:sortType:sortReverse | filter:searchLicense'>
+				<td>[[ license.act_code ]]</td>
+				<td>[[ license.organization ]]</td>
+				<td>[[ license.status ]]</td>
+				<td>[[ license.device_code ]]</td>
+				<td>[[ license.project ]]</td>
+				<td>[[ license.act_date ]]</td>
+				
+			</tr>
+		</tbody>
+	</table>
+</div>

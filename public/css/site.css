@@ -12,21 +12,23 @@
   --teal-50: #E0F2F1;
   --teal-500: #009688;
   --green-50: #E8F5E9;
+  --green-600: #43A047;
   --red-500: #F44336;
 }
 
 body, table {
+  background-image: url("../img/bg/bg004.lg.jpg");
   background-color: var(--main-bg-color);
-}
-
-* {
-  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
 }
 
 html, nav, #sidebar-wrapper {
   height: 100%;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+  box-shadow: inset 0 0 28px rgba(0,0,0,0.25);
 }
 td.editable input {
   color: var(--grey-900) !important;
@@ -77,16 +79,18 @@ tr.sortable a {
     padding-right: 10px;
   }
   nav.searchbox {
-    border-top: 0.5px solid var(--border-mn-color) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24) !important;
+    /*border-top: 0.5px solid var(--border-mn-color) !important;*/
     border-bottom: 0 !important;
-    border-left: 0.5px solid var(--border-mn-color) !important;
-    border-right: 0.5px solid var(--border-mn-color) !important;
+    /*border-left: 0.5px solid var(--border-mn-color) !important;*/
+    /*border-right: 0.5px solid var(--border-mn-color) !important;*/
   }
   table.tablebox {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     border-top: 0 !important;
-    border-bottom: 1px solid var(--border-mn-color) !important;
-    border-left: 1px solid var(--border-mn-color) !important;
-    border-right: 1px solid var(--border-mn-color) !important;
+    /*border-bottom: 1px solid var(--border-mn-color) !important;*/
+    /*border-left: 1px solid var(--border-mn-color) !important;*/
+    /*border-right: 1px solid var(--border-mn-color) !important;*/
   }
   td.indent {
     width: 45px;
@@ -118,6 +122,9 @@ tr.sortable a {
   }
   table tbody {
     border-top: 1px solid var(--border-mn-color) !important;
+  }
+  .card {
+    margin: 0 !important;
   }
 }
 /*small screen*/
@@ -157,6 +164,7 @@ td.index {
 td input:not([type]):not([readonly]), td input[type=text]:not([readonly]), td input[type=password]:not([readonly]), td input[type=email]:not([readonly]), td input[type=url]:not([readonly]), td input[type=time]:not([readonly]), td input[type=date]:not([readonly]), td input[type=datetime]:not([readonly]), td input[type=datetime-local]:not([readonly]), td input[type=tel]:not([readonly]), td input[type=number]:not([readonly]), td input[type=search]:not([readonly]), td textarea.materialize-textarea:not([readonly]) {
     /*border-bottom: 0.5px solid var(--teal-50);*/
     /*box-shadow: 0 0.5px 0 0 var(--teal-50);*/
+    width: 90%;
 }
 
 td input:not([type]):not(:focus):not([readonly]), td input[type=text]:not(:focus):not([readonly]), td input[type=password]:not(:focus):not([readonly]), td input[type=email]:not(:focus):not([readonly]), td input[type=url]:not(:focus):not([readonly]), td input[type=time]:not(:focus):not([readonly]), td input[type=date]:not(:focus):not([readonly]), td input[type=datetime]:not(:focus):not([readonly]), td input[type=datetime-local]:not(:focus):not([readonly]), td input[type=tel]:not(:focus):not([readonly]), td input[type=number]:not(:focus):not([readonly]), td input[type=search]:not(:focus):not([readonly]), td textarea.materialize-textarea:not(:focus):not([readonly]) {
@@ -290,9 +298,9 @@ nav {
 }
 
 #addLicenseModal {
-  max-height: 400px;
+  max-height: 400px;/*
   width: 100% !important;
-  left: 0 !important;
+  left: 0 !important;*/
 }
 
 #genLicenseModal {
@@ -446,22 +454,84 @@ input#search {
     transform: scale(1);
   }
 }
-.dropdown-content li {
-    min-height: 20px !important;
-}
-.dropdown-content li > a, .dropdown-content li > span {
-  color: #3F51B5 !important;
-  padding: 10px 12px !important;
+
+.dropdown-content {
+  top: auto !important;
 }
 
-/*NG ANIMATE*/
-/*.loading, .material-icons {
-  transition: 0.5s linear all;  
-  opacity: 1;
+ul.sidebar-nav li.account {
+  background-color: #fff; /*white*/
+  box-shadow: 0 0 28px rgba(0,0,0,0.25);
 }
-.loading.ng-hide, .material-icons.ng-hide {
-  opacity: 0;
-}*/
+
+ul.sidebar-nav li.account a {
+  color: #212121 !important; /*grey900*/
+}
+
+tr.transparent {
+  background: rgba(227, 242, 253, 0.9) !important;
+}
+
+nav .brand-logo {
+    font-size: 1.4rem !important;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: var(--indigo-500) !important;
+}
+
+nav.shadow-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24) !important;
+}
+
+img.nav-logo {
+  margin: 0 7px -14px -1px;
+  width: 38px;
+}
+
+i.account-drop {
+  padding: 8px 15px;
+}
+
+.account-logout a {
+  padding: 8px 0px !important;
+  font-size: 14px !important;
+}
+
+.account-logout li {
+  min-height: 38px !important;
+}
+
+div.licenses .col {
+  padding: 0 !important;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    color: var(--green-600) !important;
+    opacity: 1;
+}
+
+.tabs .tab a {
+    color: var(--green-600) !important;
+    opacity: 0.7;
+}
+
+.card .card-tabs {
+  border-bottom: #eee solid 1px;
+}
+
+.tabs .indicator {
+    background-color: var(--green-600) !important;
+}
+
+.licenseLabel {
+
+}
+
+.licenseCount {
+  font-size: 30px;
+  color: #3F51B5;
+}
 /*!
  * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
  * Copyright 2013-2016 Start Bootstrap
@@ -494,7 +564,7 @@ input#search {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #757575;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -551,7 +621,7 @@ input#search {
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;
-    font-size: 18px;
+    font-size: 2.1rem;
     line-height: 60px;
 }
 

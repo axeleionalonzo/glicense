@@ -28,17 +28,12 @@
 		<footer class="page-footer white footer">
 			<div class="container">
 				<div class="row valign-wrapper">
-					<div class="valign col s3 geoimgfooterbox">
+					<div class="valign col geoimgfooterbox">
 						<img class="geofooter" src="{{ asset('/img/geo.png') }}">
 					</div>
-					<div class="valign col s3 geolabelfooterbox">
-						<h5 class="default-text">Geo Intel</h5>
-						<p class="black-text text-lighten-4">Get the app.</p>
-					</div>
-					<div class="valign col s4 offset-s2">
-						<a href="https://play.google.com/store/apps/details?id=com.tecsq.geointel&hl=en" >
-			    			<img class="googleplay" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">
-			    		</a>
+					<div class="valign col geolabelfooterbox">
+						<h5 class="default-text">geoHMI</h5>
+						<a href="https://play.google.com/store/apps/details?id=com.tecsq.geoHMI&hl=en" class="black-text text-lighten-4">Get the app.</a>
 					</div>
 				</div>
 			</div>

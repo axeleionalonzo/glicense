@@ -16,11 +16,19 @@ elixir(function(mix) {
     	// .version('css/app.css'); 
     	// for busting the cache
     	// lets user know everytime the css is modified
+        
     mix.styles([
         'style.css',
         'simple-sidebar.css',
         'loading-bar.css',
         'materialize.css',
         'material-icon.css'
-    ], 'public/css/site.css');
+    ], 'public/css/site.css')
+    .version('public/css/site.css');
+
+
+    // mix.scripts([
+    //     'app.js'
+    // ], 'public/js/app/site.js')
+    // .version('public/js/app/site.js');
 });

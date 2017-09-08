@@ -33,9 +33,9 @@
 				<div class="section no-pad-bot" id="index-banner">
 					<div class="container col s12 m8 l4 offset-l4 offset-m2">
 						<img class="geologo center-image" src="{{ asset('/img/geo.png') }}">
-						<h1 class="center amber-text text-accent-2 appname"><span class="green-text text-darken-3">Geo</span> <span class="indigo-text">Intel</span></h1>
+						<h1 class="center amber-text text-accent-2 appname"><span class="green-text text-darken-3">geo</span><span class="indigo-text">HMI™</span></h1>
 						<div class="direcbox">
-							<p class="center grey-text text-darken-2">Sign in to continue using Geo Intel</p>
+							<p class="center grey-text text-darken-2">Sign in to continue using geoHMI</p>
 						</div>
 					</div>
 				</div>
@@ -94,6 +94,15 @@
 															</div>
 														</div>
 													@endif
+													<div class="alert alert-danger" ng-show="errorCode">
+														<br>
+														<div class="error-message error">
+															<strong>Whoops!</strong> There were some problems with your input.<br><br>
+															<ul>
+																<li>[[ errorMessage ]]</li>
+															</ul>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>

@@ -24,6 +24,7 @@ app.controller('loginController', function($scope, $http) {
 	$scope.greet = "Hello!";
 	$scope.welcome = ["Hola!","Indo!","Bonjour!","Ciao!","Ola!","Namaste!","Salaam!","Konnichiwa!","Merhaba!","Jambo!","Ni Hau!","Hallo!","Hello!"];
 	$scope.greet = $scope.welcome[Math.floor(Math.random() * $scope.welcome.length)];
+	$scope.errorCode = false;
 
 	// get auth methods from database
 	var auth = firebase.auth();
@@ -33,6 +34,8 @@ app.controller('loginController', function($scope, $http) {
 	var txtPassword = $("input#password");
 	var txtToken = $("input#token");
 	var btnLogin = $("button#login");
+	var card = $("div.card");
+	var cardAction = card.find("div.card-action");
 
 	// add login event
 	btnLogin.click(function(e) {
@@ -45,23 +48,28 @@ app.controller('loginController', function($scope, $http) {
 		auth.signInWithEmailAndPassword(email, pass).then(function() {
 		  	// Sign-in successful.
 		  	// Send token to your backend via HTTPS
+		  	cardAction.fadeOut(1000);
 			$http.post('./login', {
 				"_token":			token,
 				"email":			email,
 				"password":			pass
 			}).then(function successCallback(response) {
-			  	window.location.replace('/license');
+				$scope.greet = "The internet police is checking your account. Have a great day!";
+			  	window.location.replace('./license');
 			}, function errorCallback(response) {
 				console.log(response);
+				$scope.errorCode = true;
+				$scope.errorMessage = response;
+		  		cardAction.fadeIn(1000);
 				auth.signOut();
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
 			});
 		}, function(error) {
 			// Handle Errors here.
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			console.log(errorMessage);
+			console.log(error);
+			$scope.errorCode = error.code;
+			$scope.errorMessage = error.message;
 		});
 	});
 
@@ -76,7 +84,7 @@ app.controller('loginController', function($scope, $http) {
 	// });
 });
 
-app.controller('licenseController', function($scope, $interval, $http, $filter, $firebaseObject, $firebaseArray) {
+app.controller('licenseController', function($scope, $interval, $http, $filter, $timeout, $firebaseObject, $firebaseArray) {
 
 	// download the data into a local object
 	var ref = firebase.database().ref();
@@ -104,6 +112,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		$scope.act_date = new Date();
 	}
 
+	// removes validation when modal is closed
 	var onModalHide = function() {
 		$scope.licgenform.$setPristine();
 		$scope.licgenform.$setUntouched();
@@ -132,6 +141,15 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		$("a#logout").click(function(e) {
 			auth.signOut();
 	    });
+
+	    $("#exportlicense").click(function (e) {
+			var blob = new Blob([document.getElementById('exportData').innerHTML], {
+			        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+			    });
+			    saveAs(blob, "Report.xls");
+		    // window.open('data:application/vnd.ms-excel,' + $('#exportData').html());
+		    // e.preventDefault();
+		});
 		
 		tick();
 		$interval(tick, 1000);
@@ -139,7 +157,6 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 
 	// parse string and int with 000
 	function pad(str, max) {
-
 		str = str.toString();
 		return str.length < max ? pad("0" + str, max) : str;
 	}
@@ -174,7 +191,7 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 	};
 
 	// gets the license details ready for edit
-	// makes the table row editabel
+	// makes the table row editable
 	$scope.getLicense = function(license) {
 
 		// change the button to edit mode using angular filter array
@@ -218,12 +235,19 @@ app.controller('licenseController', function($scope, $interval, $http, $filter, 
 		});
 	};
 
+	// gets the selected license ready for deletion
 	$scope.toDelete = function(license) {
-
 		var id = license.$id;
 		var licenseData = $scope.licenses.$getRecord(id);
 
 		licenseData.confirmDelete = true;
+
+		// for security, we need to remove toDelete licenses after 3 seconds
+		if (license.confirmDelete) {
+			$timeout(function() {
+				license.confirmDelete = false;
+			}, 3000);
+		}
 
 		$scope.deleteindex = license;
 	};
